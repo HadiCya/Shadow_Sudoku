@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:shadow_sudoku/model/fakeGridGenerator.dart';
+import 'package:shadow_sudoku/view/gridNumbers.dart';
+import 'package:shadow_sudoku/model/gameState.dart';
 
 final borderMatrix = [
   [0, 1, 1, 0],
@@ -59,49 +59,18 @@ class _SudokuGridState extends State<SudokuGrid> {
                 ),
                 physics: const ScrollPhysics(),
                 itemBuilder: (buildContext, j) {
-                  return Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        top: BorderSide(
-                            width: borderMatrix[j][0] * 1.0,
-                            color: Colors.black),
-                        right: BorderSide(
-                            width: borderMatrix[j][1] * 1.0,
-                            color: Colors.black),
-                        bottom: BorderSide(
-                            width: borderMatrix[j][2] * 1.0,
-                            color: Colors.black),
-                        left: BorderSide(
-                            width: borderMatrix[j][3] * 1.0,
-                            color: Colors.black),
-                      )),
-                      alignment: Alignment.center,
-                      child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: TextButton(
-                              style: ButtonStyle(
-                                overlayColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    return Colors.transparent;
-                                  },
-                                ),
-                                splashFactory: NoSplash.splashFactory,
-                              ),
-                              onPressed: () => highlightNumbers(i, j),
-                              child: Text(
-                                "${grid[i][j]}",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50,
-                                ),
-                              ))));
+                  return GridNumbers(
+                    i: i,
+                    j: j,
+                    isHighlighted: gameState.isHighlighted(i, j),
+                    notifyParent: refresh,
+                  );
                 }),
           );
         });
   }
-}
 
-highlightNumbers(box, pos){
-  print("${box}, ${pos}");
+  refresh() {
+    setState(() {});
+  }
 }
