@@ -18,10 +18,11 @@ class SudokuGrid extends StatefulWidget {
   const SudokuGrid({super.key});
 
   @override
-  State<SudokuGrid> createState() => _SudokuGridState();
+  State<SudokuGrid> createState() => SudokuGridState();
 }
 
-class _SudokuGridState extends State<SudokuGrid> {
+class SudokuGridState extends State<SudokuGrid> {
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -69,8 +70,7 @@ class _SudokuGridState extends State<SudokuGrid> {
           );
         });
   }
-
-  refresh() {
+    refresh() {
     setState(() {});
   }
 }

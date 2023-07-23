@@ -17,10 +17,10 @@ class GridNumbers extends StatefulWidget {
       required this.notifyParent});
 
   @override
-  State<GridNumbers> createState() => _GridNumbersState();
+  State<GridNumbers> createState() => GridNumbersState();
 }
 
-class _GridNumbersState extends State<GridNumbers> {
+class GridNumbersState extends State<GridNumbers> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,12 +52,9 @@ class _GridNumbersState extends State<GridNumbers> {
                   gameState.highlightNumbers(widget.i, widget.j);
                   widget.notifyParent();
                 },
-                child: Text(
-                  "${grid[widget.i][widget.j]}",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 50,
-                  ),
-                ))));
+                child: gameState.displayNumber(widget.i, widget.j))));
+  }
+  refresh() {
+    setState(() {});
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
+import 'package:shadow_sudoku/view/gridNumbers.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
@@ -50,7 +52,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
                 padding: const EdgeInsets.all(5),
                 width: double.maxFinite,
                 alignment: Alignment.center,
-                child: const SudokuGrid(),
+                child: const SudokuGrid(),//HERE
               )),
               const Expanded(
                   child: Row(
@@ -79,7 +81,9 @@ class _SudokuWidgetState extends State<SudokuWidget> {
                         ),
                         splashFactory: NoSplash.splashFactory,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {gameState.updatePosition(i);});
+                      },
                       child: Text("$i",
                           style: const TextStyle(
                             color: shadowPurple,
@@ -89,7 +93,8 @@ class _SudokuWidgetState extends State<SudokuWidget> {
                     )),
                 ],
               )),
-            Spacer()]),
+              Spacer()
+            ]),
           )),
     );
   }
