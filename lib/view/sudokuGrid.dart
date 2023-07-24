@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/gridNumbers.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 
@@ -14,17 +16,17 @@ final borderMatrix = [
   [1, 0, 0, 1]
 ];
 
-class SudokuGrid extends StatefulWidget {
+class SudokuGrid extends ConsumerStatefulWidget {
   const SudokuGrid({super.key});
 
   @override
-  State<SudokuGrid> createState() => SudokuGridState();
+  SudokuGridState createState() => SudokuGridState();
 }
 
-class SudokuGridState extends State<SudokuGrid> {
-
+class SudokuGridState extends ConsumerState<SudokuGrid> {
   @override
   Widget build(BuildContext context) {
+    final gameState = ref.watch(gameStateController);
     return GridView.builder(
         itemCount: 9,
         shrinkWrap: true,
@@ -64,13 +66,9 @@ class SudokuGridState extends State<SudokuGrid> {
                     i: i,
                     j: j,
                     isHighlighted: gameState.isHighlighted(i, j),
-                    notifyParent: refresh,
                   );
                 }),
           );
         });
-  }
-    refresh() {
-    setState(() {});
   }
 }

@@ -19,3 +19,5 @@ fakeGrid() {
   }
   return grid;
 }
+
+final griddy = fakeGrid();

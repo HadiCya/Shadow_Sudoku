@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 void main() {
-  runApp(const ShadowSudoku());
+  runApp(ProviderScope(
+    child: ShadowSudoku(),
+  ));
 }
 
 class ShadowSudoku extends StatelessWidget {
@@ -17,7 +20,7 @@ class ShadowSudoku extends StatelessWidget {
           textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.white,
               displayColor: Colors.white)),
-      home: const SudokuWidget(),
+      home: SudokuWidget(),
     );
   }
 }

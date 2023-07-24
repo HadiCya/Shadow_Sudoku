@@ -1,23 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:provider/provider.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
+import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/gridNumbers.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
 
-class SudokuWidget extends StatefulWidget {
+class SudokuWidget extends ConsumerStatefulWidget {
   const SudokuWidget({super.key});
 
   @override
-  State<SudokuWidget> createState() => _SudokuWidgetState();
+  _SudokuWidgetState createState() => _SudokuWidgetState();
 }
 
-class _SudokuWidgetState extends State<SudokuWidget> {
+class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
   @override
   Widget build(BuildContext context) {
+    final gameState = ref.watch(gameStateController);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -52,7 +56,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
                 padding: const EdgeInsets.all(5),
                 width: double.maxFinite,
                 alignment: Alignment.center,
-                child: const SudokuGrid(),//HERE
+                child: const SudokuGrid(), //HERE
               )),
               const Expanded(
                   child: Row(
@@ -82,7 +86,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
                         splashFactory: NoSplash.splashFactory,
                       ),
                       onPressed: () {
-                        setState(() {gameState.updatePosition(i);});
+                        ref.read(gameStateController.notifier).updatePosition(i);
                       },
                       child: Text("$i",
                           style: const TextStyle(

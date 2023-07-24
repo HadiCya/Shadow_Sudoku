@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
+import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 import '../model/fakeGridGenerator.dart';
 
-class GridNumbers extends StatefulWidget {
-  final Function() notifyParent;
+class GridNumbers extends ConsumerStatefulWidget {
   final int i, j;
   final Color isHighlighted;
   const GridNumbers(
       {super.key,
       required this.i,
       required this.j,
-      required this.isHighlighted,
-      required this.notifyParent});
+      required this.isHighlighted});
 
   @override
-  State<GridNumbers> createState() => GridNumbersState();
+  _GridNumbersState createState() => _GridNumbersState();
 }
 
-class GridNumbersState extends State<GridNumbers> {
+class _GridNumbersState extends ConsumerState<GridNumbers> {
   @override
   Widget build(BuildContext context) {
+    final gameState = ref.watch(gameStateController);
     return Container(
         decoration: BoxDecoration(
-          color: widget.isHighlighted,
+            color: widget.isHighlighted,
             border: Border(
-          top: BorderSide(
-              width: borderMatrix[widget.j][0] * 1.0, color: Colors.black),
-          right: BorderSide(
-              width: borderMatrix[widget.j][1] * 1.0, color: Colors.black),
-          bottom: BorderSide(
-              width: borderMatrix[widget.j][2] * 1.0, color: Colors.black),
-          left: BorderSide(
-              width: borderMatrix[widget.j][3] * 1.0, color: Colors.black),
-        )),
+              top: BorderSide(
+                  width: borderMatrix[widget.j][0] * 1.0, color: Colors.black),
+              right: BorderSide(
+                  width: borderMatrix[widget.j][1] * 1.0, color: Colors.black),
+              bottom: BorderSide(
+                  width: borderMatrix[widget.j][2] * 1.0, color: Colors.black),
+              left: BorderSide(
+                  width: borderMatrix[widget.j][3] * 1.0, color: Colors.black),
+            )),
         alignment: Alignment.center,
         child: FittedBox(
             fit: BoxFit.fitHeight,
@@ -49,12 +50,8 @@ class GridNumbersState extends State<GridNumbers> {
                   splashFactory: NoSplash.splashFactory,
                 ),
                 onPressed: () {
-                  gameState.highlightNumbers(widget.i, widget.j);
-                  widget.notifyParent();
+                  ref.read(gameStateController.notifier).highlightNumbers(widget.i, widget.j);
                 },
                 child: gameState.displayNumber(widget.i, widget.j))));
-  }
-  refresh() {
-    setState(() {});
   }
 }

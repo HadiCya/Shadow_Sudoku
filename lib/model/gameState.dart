@@ -2,25 +2,28 @@ import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/fakeGridGenerator.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:shadow_sudoku/view/square.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
+@immutable
 class GameState {
-  int i = 0;
-  int j = 0;
-  SudokuNumber num = SudokuNumber();
-  var grid = fakeGrid();
+  GameState({required this.i, required this.j, required this.num});
+
+  final int i;
+  final int j;
+  final SudokuNumber num;
+  final grid = griddy;
+
+  GameState copyWith(
+      {required int i, required int j, required SudokuNumber num}) {
+    return GameState(i: i, j: j, num: num);
+  }
 
   getGridInfo(box, pos) {
     return grid[box][pos].num;
-  }
-
-  highlightNumbers(box, pos) {
-    i = box;
-    j = pos;
-    num = grid[box][pos];
   }
 
   Color isHighlighted(box, pos) {
@@ -42,16 +45,6 @@ class GameState {
     return Colors.transparent;
   }
 
-  updatePosition(int input) {
-    var rng = Random(); //Random true or false just for testing
-    SudokuNumber temp = SudokuNumber();
-    temp.num = input;
-    temp.isCorrect = rng.nextBool();
-    if (grid[i][j].num == 0) {
-      grid[i][j] = temp;
-    }
-  }
-
   Square displayNumber(box, pos) {
     String text = "";
     Color color = Colors.white;
@@ -70,5 +63,3 @@ class GameState {
     return result;
   }
 }
-
-var gameState = GameState();
