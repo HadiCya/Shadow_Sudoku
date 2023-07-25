@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
-import 'package:provider/provider.dart';
-import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
-import 'package:shadow_sudoku/view/gridNumbers.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
@@ -21,7 +18,6 @@ class SudokuWidget extends ConsumerStatefulWidget {
 class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
   @override
   Widget build(BuildContext context) {
-    final gameState = ref.watch(gameStateController);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -49,7 +45,6 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
           child: Container(
             alignment: Alignment.center,
             child: Column(children: [
-              Spacer(),
               Container(
                   child: Container(
                 margin: const EdgeInsets.all(10),
@@ -58,16 +53,19 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                 alignment: Alignment.center,
                 child: const SudokuGrid(), //HERE
               )),
-              const Expanded(
+              Expanded(
                   child: Row(
                 children: [
                   ActionButton(
                       buttonText: "Undo",
-                      icon: CupertinoIcons.arrow_counterclockwise),
-                  ActionButton(buttonText: "Erase", icon: CupertinoIcons.xmark),
-                  ActionButton(
+                      icon: CupertinoIcons.arrow_counterclockwise,
+                      onPressed: () {
+                        ref.read(gameStateController.notifier).undoButton();
+                      }),
+                  const ActionButton(buttonText: "Erase", icon: CupertinoIcons.xmark),
+                  const ActionButton(
                       buttonText: "Notes", icon: CupertinoIcons.pencil),
-                  ActionButton(
+                  const ActionButton(
                       buttonText: "Hint", icon: CupertinoIcons.lightbulb),
                 ],
               )),
@@ -86,18 +84,19 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                         splashFactory: NoSplash.splashFactory,
                       ),
                       onPressed: () {
-                        ref.read(gameStateController.notifier).updatePosition(i);
+                        ref
+                            .read(gameStateController.notifier)
+                            .updatePosition(i);
                       },
                       child: Text("$i",
                           style: const TextStyle(
                             color: shadowPurple,
-                            fontSize: 50,
-                            fontWeight: FontWeight.w300,
+                            fontSize: 46,
+                            fontWeight: FontWeight.w500,
                           )),
                     )),
                 ],
               )),
-              Spacer()
             ]),
           )),
     );

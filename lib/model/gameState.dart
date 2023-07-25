@@ -1,32 +1,34 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shadow_sudoku/model/fakeGridGenerator.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:shadow_sudoku/view/square.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 @immutable
 class GameState {
-  GameState({required this.i, required this.j, required this.num});
+  GameState(
+      {required this.i,
+      required this.j,
+      required this.num,
+      required this.grid});
 
   final int i;
   final int j;
   final SudokuNumber num;
-  final grid = griddy;
+  final List grid;
 
-  GameState copyWith(
-      {required int i, required int j, required SudokuNumber num}) {
-    return GameState(i: i, j: j, num: num);
+  GameState copyWith({int? i, int? j, SudokuNumber? num, List? grid}) {
+    return GameState(
+        i: i ?? this.i,
+        j: j ?? this.j,
+        num: num ?? this.num,
+        grid: grid ?? this.grid);
   }
 
   getGridInfo(box, pos) {
     return grid[box][pos].num;
   }
 
-  Color isHighlighted(box, pos) {
+  Color displayHighlight(box, pos) {
     if (pos == j && box == i) {
       //Highlights selected box
       return shadowPurple.withOpacity(0.6);
@@ -55,7 +57,7 @@ class GameState {
     if (currentPos.isSystemGenerated) {
       color = Colors.white;
     } else if (currentPos.isCorrect) {
-      color = shadowPurple;
+      color = Color.fromRGBO(203, 195, 227, 1);
     } else {
       color = Colors.red;
     }

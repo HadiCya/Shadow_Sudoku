@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/gridNumbers.dart';
-import 'package:shadow_sudoku/model/gameState.dart';
 
 final borderMatrix = [
   [0, 1, 1, 0],
@@ -65,7 +64,7 @@ class SudokuGridState extends ConsumerState<SudokuGrid> {
                   return GridNumbers(
                     i: i,
                     j: j,
-                    isHighlighted: gameState.isHighlighted(i, j),
+                    isHighlighted: gameState.displayHighlight(i, j),
                   );
                 }),
           );

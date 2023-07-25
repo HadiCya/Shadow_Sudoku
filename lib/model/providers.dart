@@ -1,32 +1,48 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
-import 'package:shadow_sudoku/view/square.dart';
-import 'package:shadow_sudoku/view/sudokuWidget.dart';
-import 'package:state_notifier/state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
     (ref) => GameStateNotifier());
 
 class GameStateNotifier extends StateNotifier<GameState> {
-  GameStateNotifier() : super(GameState(i: 0, j: 0, num: SudokuNumber()));
+  GameStateNotifier()
+      : super(GameState(
+            i: 0,
+            j: 0,
+            num: SudokuNumber(),
+            grid: initialGrid));
 
   highlightNumbers(box, pos) {
-    state = GameState(i: box, j: pos, num: state.grid[box][pos]);
+    state = state.copyWith(i: box, j: pos, num: state.grid[box][pos]);
   }
 
   updatePosition(int input) {
-    var newState = GameState(i: state.i, j: state.j, num: state.num);
     var rng = Random(); //Random true or false just for testing
     SudokuNumber temp = SudokuNumber();
     temp.num = input;
     temp.isCorrect = rng.nextBool();
-    if (newState.grid[newState.i][newState.j].num == 0) {
-      newState.grid[newState.i][newState.j] = temp;
+    List<List<SudokuNumber>> grid = [for (var sublist in state.grid) [...sublist]];
+
+    if (grid[state.i][state.j].num == 0) {
+      grid[state.i][state.j] = temp;
+      undoStack.push(grid);
     }
-    state = newState;
+    state = state.copyWith(grid: grid);
+  }
+
+  undoButton() {
+    if (undoStack.isEmpty) {
+      return;
+    }
+    undoStack.pop();
+    if (undoStack.isEmpty) {
+      state = state.copyWith(grid: initialGrid);
+      return;
+    }
+    state = state.copyWith(grid: undoStack.peek);
   }
 }

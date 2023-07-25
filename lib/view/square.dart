@@ -16,7 +16,7 @@ class _SquareState extends State<Square> {
       widget.text,
       style: TextStyle(
         color: widget.color,
-        fontSize: 50,
+        fontSize: 120,
       ),
     );
   }

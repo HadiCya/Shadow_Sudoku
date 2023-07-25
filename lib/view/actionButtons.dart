@@ -31,7 +31,7 @@ class ActionButton extends StatelessWidget {
                     inherit: false,
                     color: Colors.white,
                     fontSize: 50.0,
-                    fontWeight: FontWeight.w100,
+                    fontWeight: FontWeight.w900,
                     fontFamily: icon.fontFamily,
                     package: icon.fontPackage,
                   ),
