@@ -5,7 +5,7 @@ import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 @immutable
 class GameState {
-  GameState(
+  const GameState(
       {required this.i,
       required this.j,
       required this.num,
@@ -57,7 +57,7 @@ class GameState {
     if (currentPos.isSystemGenerated) {
       color = Colors.white;
     } else if (currentPos.isCorrect) {
-      color = Color.fromRGBO(203, 195, 227, 1);
+      color = const Color.fromRGBO(203, 195, 227, 1);
     } else {
       color = Colors.red;
     }

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shadow_sudoku/model/fakeGridGenerator.dart';
+import 'package:shadow_sudoku/model/gridGenerator.dart';
 import 'package:shadow_sudoku/model/stack.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
-final initialGrid = fakeGrid();
+var initialGrid;
 final undoStack = NewStack<List>();
 
-void main() {
-  runApp(ProviderScope(
+void main() async {
+  initialGrid = await gridGenerator();
+  runApp(const ProviderScope(
     child: ShadowSudoku(),
   ));
 }
@@ -25,7 +26,7 @@ class ShadowSudoku extends StatelessWidget {
           textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.white,
               displayColor: Colors.white)),
-      home: SudokuWidget(),
+      home: const SudokuWidget(),
     );
   }
 }
