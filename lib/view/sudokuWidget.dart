@@ -18,24 +18,23 @@ class SudokuWidget extends ConsumerStatefulWidget {
 class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
   @override
   Widget build(BuildContext context) {
+    final gameState = ref.watch(gameStateController);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const IntrinsicHeight(
-            child: Stack(
-              children: [
-                Positioned(
-                    left: 0,
-                    child: Icon(SFSymbols.chevron_left, color: shadowPurple)),
-                Align(child: Text("Shadow Sudoku")),
-                Positioned(
-                    right: 0,
-                    child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
-              ],
-            ),
-          )),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Stack(
+          children: [
+            Positioned(
+                left: 0,
+                child: Icon(SFSymbols.chevron_left, color: shadowPurple)),
+            Align(child: Text("Shadow Sudoku")),
+            Positioned(
+                right: 0, child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
+          ],
+        ),
+      ),
       body: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -45,14 +44,18 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
           child: Container(
             alignment: Alignment.center,
             child: Column(children: [
-              Container(
-                  child: Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(5),
-                width: double.maxFinite,
-                alignment: Alignment.center,
-                child: const SudokuGrid(), //HERE
-              )),
+              const Spacer(),
+              Stack(children: [
+                Positioned(top: 105, left: 15, child: Text("Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}")),
+                Container(
+                    child: Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
+                  width: double.maxFinite,
+                  alignment: Alignment.center,
+                  child: const SudokuGrid(), //HERE
+                ))
+              ]),
               Expanded(
                   child: Row(
                 children: [
@@ -62,7 +65,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                       onPressed: () {
                         ref.read(gameStateController.notifier).undoButton();
                       }),
-                  const ActionButton(buttonText: "Erase", icon: CupertinoIcons.xmark),
+                  const ActionButton(
+                      buttonText: "Erase", icon: CupertinoIcons.xmark),
                   const ActionButton(
                       buttonText: "Notes", icon: CupertinoIcons.pencil),
                   const ActionButton(

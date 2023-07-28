@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:shadow_sudoku/view/square.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
@@ -9,23 +10,42 @@ class GameState {
       {required this.i,
       required this.j,
       required this.num,
-      required this.grid});
+      required this.grid,
+      required this.currMistakes,
+      required this.maxMistakes});
 
-  final int i;
-  final int j;
+  final int i, j, currMistakes, maxMistakes;
   final SudokuNumber num;
-  final List grid;
+  final List<List<SudokuNumber>> grid;
 
-  GameState copyWith({int? i, int? j, SudokuNumber? num, List? grid}) {
+  GameState copyWith({int? i, int? j, SudokuNumber? num, List<List<SudokuNumber>>? grid, int? currMistakes, int? maxMistakes}) {
     return GameState(
         i: i ?? this.i,
         j: j ?? this.j,
         num: num ?? this.num,
-        grid: grid ?? this.grid);
+        grid: grid ?? this.grid,
+        currMistakes: currMistakes ?? this.currMistakes, 
+        maxMistakes: maxMistakes ?? this.maxMistakes);
   }
 
   getGridInfo(box, pos) {
     return grid[box][pos].num;
+  }
+
+  bool checkCorrect(int input) {
+    return input == solvedGrid[i][j];
+  }
+
+  checkWinStatus() {
+    if (currMistakes == maxMistakes) {return false;}
+    int product = 1;
+    for (int n = 0; n < 9; n++){
+      for (int m = 0; m < 9; m++) {
+        product *= grid[n][m].num;
+        if (!grid[n][m].isCorrect) {return null;}
+      }
+    }
+    return product != 0 ? true : null;
   }
 
   Color displayHighlight(box, pos) {
