@@ -9,11 +9,9 @@ import 'package:shadow_sudoku/view/sudokuWidget.dart';
 var initialGrid, solvedGrid;
 final undoStack = NewStack<List<List<SudokuNumber>>>();
 
-void main() async {
-  var (ig, sg) = await gridGenerator();
-  initialGrid = ig; solvedGrid = sg;
+void main() {
   runApp(const ProviderScope(
-    child: FrontPage(),
+    child: ShadowSudoku(),
   ));
 }
 
@@ -22,14 +20,16 @@ class ShadowSudoku extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(routes: {
+      '/sudokuWidget': (context) => SudokuWidget(),
+    },
       debugShowCheckedModeBanner: false,
       title: "Shadow Sudoku",
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.white,
               displayColor: Colors.white)),
-      home: const SudokuWidget(),
+      home: FrontPageHome(),
     );
   }
 }

@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
-class FrontPage extends StatefulWidget {
-  const FrontPage({super.key});
-
-  @override
-  State<FrontPage> createState() => _FrontPageState();
-}
-
-class _FrontPageState extends State<FrontPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(routes: {
-      '/sudokuWidget': (context) => SudokuWidget(),
-    }, home: FrontPageHome());
-  }
-}
+import 'main.dart';
+import 'model/gridGenerator.dart';
 
 class FrontPageHome extends StatelessWidget {
   @override
@@ -46,97 +33,101 @@ class FrontPageHome extends StatelessWidget {
         Container(
           height: 350,
         ),
-        Container(
-          child: GestureDetector(
-            onTap: () => (showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return SizedBox(
-                  height: 400,
-                  child: ColoredBox(
-                      color: const Color.fromARGB(255, 44, 43, 43),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 100,
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () => (Navigator.pushNamed(
-                                  context, "/sudokuWidget")),
-                              child: Center(
-                                  child: Text(
-                                "Easy",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              )),
-                            ),
-                            height: 50,
-                            width: 350,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 164, 75, 170)
-                                  .withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          Container(
-                            height: 25,
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () => (Navigator.pushNamed(
-                                  context, "/sudokuWidget")),
-                              child: Center(
-                                  child: Text(
-                                "Medium",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              )),
-                            ),
-                            height: 50,
-                            width: 350,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 164, 75, 170)
-                                  .withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          Container(
-                            height: 25,
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () => (Navigator.pushNamed(
-                                  context, "/sudokuWidget")),
-                              child: Center(
-                                  child: Text(
-                                "Hard",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              )),
-                            ),
-                            height: 50,
-                            width: 350,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 164, 75, 170)
-                                  .withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          )
-                        ],
-                      )),
-                );
-              },
+        GestureDetector(
+          onTap: () => (showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
+              ),
+            ),
+            backgroundColor: Color.fromARGB(255, 31, 31, 31),
+            constraints: BoxConstraints.tight(Size(
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height * 0.35,
             )),
+            context: context,
+            builder: (BuildContext context) {
+              return Column(
+                children: [
+                  Container(
+                    height: 20,
+                  ),
+                  Container(
+                    child: GestureDetector(
+                      onTap: () async {
+                          var (ig, sg) = await gridGenerator();
+                          initialGrid = ig; solvedGrid = sg;
+                          Navigator.pushNamed(context, "/sudokuWidget");
+
+                      },
+                      child: Text(
+                        "Easy",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w200,
+                          color: Color.fromARGB(255, 164, 75, 170),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  Divider(
+                    color: Color.fromARGB(255, 208, 53, 219),
+                    thickness: 0.5,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  Container(
+                    child: GestureDetector(
+                      onTap: () => {
+                        
+                      },
+                      child: Text(
+                        "Medium",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w200,
+                          color: Color.fromARGB(255, 164, 75, 170),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  Divider(
+                    color: Color.fromARGB(255, 208, 53, 219),
+                    thickness: 0.5,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  Container(
+                    child: GestureDetector(
+                      onTap: () => {},
+                      child: Text(
+                        "Hard",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w200,
+                          color: Color.fromARGB(255, 164, 75, 170),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          )),
+          child: Container(
             child: Center(
                 child: Text(
               "New Game",
@@ -146,47 +137,48 @@ class FrontPageHome extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             )),
-          ),
-          height: 50,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 164, 75, 170).withOpacity(0.7),
-            borderRadius: BorderRadius.circular(100),
+            height: 50,
+            width: 300,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 164, 75, 170).withOpacity(0.7),
+              borderRadius: BorderRadius.circular(100),
+            ),
           ),
         ),
         Container(
           height: 15,
         ),
-        Container(
-          child: GestureDetector(
-            onTap: () {
-              print("Continue");
-            },
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "/sudokuWidget");
+          },
+          child: Container(
             child: Center(
-                child: Text(
-              "Continue",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
+              child: Text(
+                "Continue",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            )),
-          ),
-          height: 50,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 69, 66, 66).withOpacity(0.7),
-            borderRadius: BorderRadius.circular(100),
+            ),
+            height: 50,
+            width: 300,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 69, 66, 66).withOpacity(0.7),
+              borderRadius: BorderRadius.circular(100),
+            ),
           ),
         ),
         Container(
           height: 15,
         ),
-        Container(
-          child: GestureDetector(
-            onTap: () {
-              print("Settings");
-            },
+        GestureDetector(
+          onTap: () {
+            print("Settings");
+          },
+          child: Container(
             child: Center(
                 child: Text(
               "Settings",
@@ -196,12 +188,12 @@ class FrontPageHome extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             )),
-          ),
-          height: 50,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 69, 66, 66).withOpacity(0.7),
-            borderRadius: BorderRadius.circular(100),
+            height: 50,
+            width: 300,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 69, 66, 66).withOpacity(0.7),
+              borderRadius: BorderRadius.circular(100),
+            ),
           ),
         ),
       ]),
