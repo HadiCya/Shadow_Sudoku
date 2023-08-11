@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 import 'main.dart';
+import 'model/gameState.dart';
 import 'model/gridGenerator.dart';
+import 'model/providers.dart';
 
 class FrontPageHome extends StatelessWidget {
   @override
@@ -58,8 +61,9 @@ class FrontPageHome extends StatelessWidget {
                       onTap: () async {
                           var (ig, sg) = await gridGenerator();
                           initialGrid = ig; solvedGrid = sg;
+                          gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
+                          (ref) => GameStateNotifier());
                           Navigator.pushNamed(context, "/sudokuWidget");
-
                       },
                       child: Text(
                         "Easy",

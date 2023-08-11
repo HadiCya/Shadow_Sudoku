@@ -5,7 +5,7 @@ import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
+var gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
     (ref) => GameStateNotifier());
 
 class GameStateNotifier extends StateNotifier<GameState> {
