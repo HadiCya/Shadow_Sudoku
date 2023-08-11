@@ -77,8 +77,12 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                       onPressed: () {
                         ref.read(gameStateController.notifier).undoButton();
                       }),
-                  const ActionButton(
-                      buttonText: "Erase", icon: CupertinoIcons.xmark),
+                  ActionButton(
+                      buttonText: "Erase",
+                      icon: CupertinoIcons.xmark,
+                      onPressed: () {
+                        ref.read(gameStateController.notifier).eraseButton();
+                      }),
                   const ActionButton(
                       buttonText: "Notes", icon: CupertinoIcons.pencil),
                   const ActionButton(
