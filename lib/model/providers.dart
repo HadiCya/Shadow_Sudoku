@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
@@ -39,7 +37,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     }
     var winStatus = state.checkWinStatus();
     if (winStatus != null) {
-      winStatus ? print("You win!") : print("You lose!");
+      winStatus ? print("You win!") : print("You lose!"); //Temporary
     }
   }
 
