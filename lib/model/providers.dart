@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
@@ -16,7 +14,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
             num: SudokuNumber(),
             grid: initialGrid,
             currMistakes: 0,
-            maxMistakes: 3));
+            maxMistakes: 3,
+            numberCount: numberCount));
 
   highlightNumbers(box, pos) {
     state = state.copyWith(i: box, j: pos, num: state.grid[box][pos]);
@@ -31,15 +30,21 @@ class GameStateNotifier extends StateNotifier<GameState> {
     ];
     if (grid[state.i][state.j].num == 0) {
       grid[state.i][state.j] = temp;
-      undoStack.push(grid);
+      List<int> numCountTemp =
+          List.generate(9, (index) => state.numberCount[index]);
+      if (temp.isCorrect) {
+        numCountTemp[input - 1]++;
+      }
       state = state.copyWith(
-        grid: grid,
-        currMistakes:
-           temp.isCorrect ? state.currMistakes : state.currMistakes + 1);
+          grid: grid,
+          currMistakes:
+              (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
+          numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
+      undoStack.push(state);
     }
     var winStatus = state.checkWinStatus();
     if (winStatus != null) {
-      winStatus ? print("You win!") : print("You lose!");
+      winStatus ? print("You win!") : print("You lose!"); //Temporary
     }
   }
 
@@ -49,9 +54,9 @@ class GameStateNotifier extends StateNotifier<GameState> {
     }
     undoStack.pop();
     if (undoStack.isEmpty) {
-      state = state.copyWith(grid: initialGrid);
+      state = state.copyWith(grid: initialGrid, numberCount: numberCount);
       return;
     }
-    state = state.copyWith(grid: undoStack.peek);
+    state = undoStack.peek;
   }
 }

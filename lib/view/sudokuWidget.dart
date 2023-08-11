@@ -56,7 +56,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
             child: Column(children: [
               const Spacer(),
               Stack(children: [
-                Positioned(top: 105, left: 15, child: Text("Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}")),
+                Positioned(
+                    top: 105,
+                    left: 15,
+                    child: Text(
+                        "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}")),
                 Container(
                     child: Container(
                   margin: const EdgeInsets.all(10),
@@ -88,26 +92,33 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                 children: [
                   for (var i = 1; i < 10; i++)
                     Expanded(
-                        child: TextButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return Colors.transparent;
+                        child: Column(
+                      children: [
+                        Text("${gameState.numberCount[i - 1]}"),
+                        TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
+                            overlayColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return Colors.transparent;
+                              },
+                            ),
+                            splashFactory: NoSplash.splashFactory,
+                          ),
+                          onPressed: () {
+                            ref
+                                .read(gameStateController.notifier)
+                                .updatePosition(i);
                           },
+                          child: Text("$i",
+                              style: const TextStyle(
+                                color: shadowPurple,
+                                fontSize: 46,
+                                fontWeight: FontWeight.w500,
+                              )),
                         ),
-                        splashFactory: NoSplash.splashFactory,
-                      ),
-                      onPressed: () {
-                        ref
-                            .read(gameStateController.notifier)
-                            .updatePosition(i);
-                      },
-                      child: Text("$i",
-                          style: const TextStyle(
-                            color: shadowPurple,
-                            fontSize: 46,
-                            fontWeight: FontWeight.w500,
-                          )),
+                      ],
                     )),
                 ],
               )),

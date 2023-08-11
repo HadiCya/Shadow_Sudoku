@@ -10,8 +10,14 @@ gridGenerator() async {
     List<List<SudokuNumber>> grid =
         List.generate(9, (i) => List.generate(9, (j) => SudokuNumber()));
     var board = puzzle.board();
+    List<int> numberCountList = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
     for (int r = 0; r < 9; r++) {
       for (Cell c in board!.getRow(r)) {
+        if (c.getValue()! != 0) {
+          numberCountList[(c.getValue()! - 1)]++;
+        }
+        //Board
         int y = c.getPosition()!.grid!.y.toInt();
         int box = ((y ~/ 3)) + ((r ~/ 3) * 3); //3
         int pos = (y % 3) + ((r % 3) * 3);
@@ -34,6 +40,6 @@ gridGenerator() async {
       }
     }
 
-    return (grid, solvedGrid);
+    return (grid, solvedGrid, numberCountList);
   });
 }
