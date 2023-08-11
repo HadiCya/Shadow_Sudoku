@@ -50,8 +50,8 @@ class BottomSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: () async{
-        var (ig, sg) = await gridGenerator();
-        initialGrid = ig; solvedGrid = sg;
+        var (ig, sg, nc) = await gridGenerator();
+        initialGrid = ig; solvedGrid = sg; numberCount = nc;
         gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
         (ref) => GameStateNotifier());
         Navigator.push(context, MaterialPageRoute(builder: (context) => SudokuWidget(),));
