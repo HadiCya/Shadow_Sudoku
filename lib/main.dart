@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
+import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/gridGenerator.dart';
 import 'package:shadow_sudoku/model/stack.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
@@ -8,9 +9,7 @@ import 'package:shadow_sudoku/view/sudokuWidget.dart';
 var initialGrid, solvedGrid, numberCount;
 final undoStack = NewStack<GameState>();
 
-void main() async {
-  var (ig, sg, nc) = await gridGenerator();
-  initialGrid = ig; solvedGrid = sg; numberCount = nc;
+void main() {
   runApp(const ProviderScope(
     child: ShadowSudoku(),
   ));
@@ -21,14 +20,16 @@ class ShadowSudoku extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(routes: {
+      '/sudokuWidget': (context) => SudokuWidget(),
+    },
       debugShowCheckedModeBanner: false,
       title: "Shadow Sudoku",
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.white,
               displayColor: Colors.white)),
-      home: const SudokuWidget(),
+      home: FrontPageHome(),
     );
   }
 }

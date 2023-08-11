@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
@@ -22,13 +23,22 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        leading: GestureDetector(
+          child: Icon(Icons.arrow_back_ios_new),
+          onTap: () => (
+            Navigator.push(context, MaterialPageRoute(builder: (context) => FrontPageHome())),
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color:shadowPurple,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Stack(
           children: [
-            Positioned(
-                left: 0,
-                child: Icon(SFSymbols.chevron_left, color: shadowPurple)),
+            // Positioned(
+            //     left: 0,
+            //     child: Icon(SFSymbols.chevron_left, color: shadowPurple)),
             Align(child: Text("Shadow Sudoku")),
             Positioned(
                 right: 0, child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
@@ -57,7 +67,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   padding: const EdgeInsets.all(5),
                   width: double.maxFinite,
                   alignment: Alignment.center,
-                  child: const SudokuGrid(), //HERE
+                  child: const SudokuGrid() //HERE
                 ))
               ]),
               Expanded(
