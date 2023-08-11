@@ -12,21 +12,45 @@ class GameState {
       required this.num,
       required this.grid,
       required this.currMistakes,
-      required this.maxMistakes});
+      required this.maxMistakes,
+      required this.numberCount});
 
   final int i, j, currMistakes, maxMistakes;
+  final List<int> numberCount;
   final SudokuNumber num;
   final List<List<SudokuNumber>> grid;
 
-  GameState copyWith({int? i, int? j, SudokuNumber? num, List<List<SudokuNumber>>? grid, int? currMistakes, int? maxMistakes}) {
+  GameState copyWith(
+      {int? i,
+      int? j,
+      SudokuNumber? num,
+      List<List<SudokuNumber>>? grid,
+      int? currMistakes,
+      int? maxMistakes,
+      List<int>? numberCount}) {
     return GameState(
         i: i ?? this.i,
         j: j ?? this.j,
         num: num ?? this.num,
         grid: grid ?? this.grid,
-        currMistakes: currMistakes ?? this.currMistakes, 
-        maxMistakes: maxMistakes ?? this.maxMistakes);
+        currMistakes: currMistakes ?? this.currMistakes,
+        maxMistakes: maxMistakes ?? this.maxMistakes,
+        numberCount: numberCount ?? this.numberCount);
   }
+
+//  getNumberCount() {
+//     List<int> numberCountList = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+//     for (int n = 0; n < 9; n++) {
+//       for (int m = 0; m < 9; m++) {
+
+//       }
+//     }
+//     for (int i = 0; i < 9; i++) {
+//       numberCountList[i] = 9 - numberCountList[i];
+//     }
+//     print(numberCountList);
+//     numberCount = numberCountList;
+//   }
 
   getGridInfo(box, pos) {
     return grid[box][pos].num;
@@ -37,12 +61,16 @@ class GameState {
   }
 
   checkWinStatus() {
-    if (currMistakes == maxMistakes) {return false;}
+    if (currMistakes == maxMistakes) {
+      return false;
+    }
     int product = 1;
-    for (int n = 0; n < 9; n++){
+    for (int n = 0; n < 9; n++) {
       for (int m = 0; m < 9; m++) {
         product *= grid[n][m].num;
-        if (!grid[n][m].isCorrect) {return null;}
+        if (!grid[n][m].isCorrect) {
+          return null;
+        }
       }
     }
     return product != 0 ? true : null;

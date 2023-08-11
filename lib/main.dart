@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/gridGenerator.dart';
 import 'package:shadow_sudoku/model/stack.dart';
-import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
-var initialGrid, solvedGrid;
-final undoStack = NewStack<List<List<SudokuNumber>>>();
+var initialGrid, solvedGrid, numberCount;
+final undoStack = NewStack<GameState>();
 
 void main() async {
-  var (ig, sg) = await gridGenerator();
-  initialGrid = ig; solvedGrid = sg;
+  var (ig, sg, nc) = await gridGenerator();
+  initialGrid = ig; solvedGrid = sg; numberCount = nc;
   runApp(const ProviderScope(
     child: ShadowSudoku(),
   ));
