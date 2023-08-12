@@ -26,19 +26,17 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
         leading: GestureDetector(
           child: Icon(Icons.arrow_back_ios_new),
           onTap: () => (
-            Navigator.push(context, MaterialPageRoute(builder: (context) => FrontPageHome())),
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FrontPageHome())),
           ),
         ),
         iconTheme: IconThemeData(
-          color:shadowPurple,
+          color: shadowPurple,
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Stack(
           children: [
-            // Positioned(
-            //     left: 0,
-            //     child: Icon(SFSymbols.chevron_left, color: shadowPurple)),
             Align(child: Text("Shadow Sudoku")),
             Positioned(
                 right: 0, child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
@@ -52,23 +50,23 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                 fit: BoxFit.cover),
           ),
           child: Container(
-            alignment: Alignment.center,
             child: Column(children: [
-              const Spacer(),
+              Container(height: MediaQuery.of(context).size.height / 15),
               Stack(children: [
-                Positioned(
-                    top: 105,
-                    left: 15,
-                    child: Text(
-                        "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}")),
                 Container(
-                    child: Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(5),
-                  width: double.maxFinite,
-                  alignment: Alignment.center,
-                  child: const SudokuGrid() //HERE
-                ))
+                    margin: const EdgeInsets.only(
+                        left: 10, right: 10, top: 0, bottom: 0),
+                    padding: const EdgeInsets.only(
+                        left: 5, right: 5, top: 0, bottom: 0),
+                    width: double.maxFinite,
+                    alignment: Alignment.topCenter,
+                    child: const SudokuGrid()),
+                Positioned(
+                  left: 15,
+                  top: (MediaQuery.of(context).size.height / 12),
+                  child: Text(
+                      "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
+                ),
               ]),
               Expanded(
                   child: Row(
