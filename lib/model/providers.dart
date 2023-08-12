@@ -55,9 +55,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
       grid[state.i][state.j] = temp;
       state = state.copyWith(
           grid: grid,
-          numberCount: grid[state.i][state.j].isCorrect
-              ? numCountTemp
-              : state.numberCount);
+          numberCount: numCountTemp);
       undoStack.push(state);
     }
   }
