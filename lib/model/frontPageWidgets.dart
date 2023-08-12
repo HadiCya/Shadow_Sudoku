@@ -42,7 +42,7 @@ class FrontPageButton extends StatelessWidget {
 class BottomSheetButton extends StatelessWidget {
 
   final String buttonText;
-  final int difficulty;
+  final difficultyOptions difficulty;
 
   const BottomSheetButton({super.key, required this.buttonText, required this.difficulty});
   
@@ -50,7 +50,7 @@ class BottomSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: () async{
-        var (ig, sg, nc) = await gridGenerator();
+        var (ig, sg, nc) = await gridGenerator(difficultyOptions.easy);
         initialGrid = ig; solvedGrid = sg; numberCount = nc;
         gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
         (ref) => GameStateNotifier());
