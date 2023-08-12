@@ -38,20 +38,6 @@ class GameState {
         numberCount: numberCount ?? this.numberCount);
   }
 
-//  getNumberCount() {
-//     List<int> numberCountList = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-//     for (int n = 0; n < 9; n++) {
-//       for (int m = 0; m < 9; m++) {
-
-//       }
-//     }
-//     for (int i = 0; i < 9; i++) {
-//       numberCountList[i] = 9 - numberCountList[i];
-//     }
-//     print(numberCountList);
-//     numberCount = numberCountList;
-//   }
-
   getGridInfo(box, pos) {
     return grid[box][pos].num;
   }
