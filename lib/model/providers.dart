@@ -46,18 +46,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
         winStatus ? print("You win!") : print("You lose!"); //Temporary
       }
     }
-    if (input == 0 &&
-        grid[state.i][state.j].num != 0 &&
-        !grid[state.i][state.j].isSystemGenerated) {
-      if (grid[state.i][state.j].isCorrect) {
-        numCountTemp[grid[state.i][state.j].num - 1]--;
-      }
-      grid[state.i][state.j] = temp;
-      state = state.copyWith(
-          grid: grid,
-          numberCount: numCountTemp);
-      undoStack.push(state);
-    }
   }
 
   undoButton() {
@@ -73,6 +61,20 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   eraseButton() {
-    updatePosition(0);
+    SudokuNumber temp = SudokuNumber();
+    List<List<SudokuNumber>> grid = [
+      for (var sublist in state.grid) [...sublist]
+    ];
+    List<int> numCountTemp =
+        List.generate(9, (index) => state.numberCount[index]);
+    if (grid[state.i][state.j].num != 0 &&
+        !grid[state.i][state.j].isSystemGenerated) {
+      if (grid[state.i][state.j].isCorrect) {
+        numCountTemp[grid[state.i][state.j].num - 1]--;
+      }
+      grid[state.i][state.j] = temp;
+      state = state.copyWith(grid: grid, numberCount: numCountTemp);
+      undoStack.push(state);
+    }
   }
 }
