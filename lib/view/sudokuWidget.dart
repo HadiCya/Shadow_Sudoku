@@ -43,14 +43,14 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
           ],
         ),
       ),
-      body: DecoratedBox(
+      body: DecoratedBox(       
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/SudokuBackground.png"),
                 fit: BoxFit.cover),
           ),
           child: Container(
-            child: Column(children: [
+            child: Column(children: [             
               Container(height: MediaQuery.of(context).size.height / 15),
               Stack(children: [
                 Container(
@@ -66,6 +66,12 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   top: (MediaQuery.of(context).size.height / 12),
                   child: Text(
                       "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
+                ),
+                Positioned(
+                  right: 15,
+                  top: (MediaQuery.of(context).size.height / 12),
+                  child: Text(
+                      "Hints: ${gameState.currHints}/${gameState.maxHints}"),
                 ),
               ]),
               Expanded(
@@ -85,8 +91,13 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                       }),
                   const ActionButton(
                       buttonText: "Notes", icon: CupertinoIcons.pencil),
-                  const ActionButton(
-                      buttonText: "Hint", icon: CupertinoIcons.lightbulb),
+                  ActionButton(
+                      buttonText: "Hint", 
+                      icon: CupertinoIcons.lightbulb,
+                      onPressed: () {
+                        ref.read(gameStateController.notifier).hintButton();
+                      },
+                      ),
                 ],
               )),
               Expanded(
