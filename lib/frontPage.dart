@@ -86,7 +86,30 @@ class FrontPageHome extends StatelessWidget {
 
                   SizedBox(height: 25),
 
-                  FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                  //FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+
+                  GestureDetector(
+                    child: FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                    onTap: () => (
+                      showDialog(
+                        context: context, 
+                        builder: (context) => SimpleDialog(
+                          title: const Text("You Win"),
+                          contentPadding: EdgeInsets.zero,
+                          children: [
+                            Container(
+                              height: 300,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 81, 82, 84),
+                                border: Border.all(color: Color.fromARGB(255, 62, 62, 64), width: 4),
+                              ),
+                            ),
+                          ],
+                        )
+                        )
+                    ),
+                  ),
                   
                 ],
               ),

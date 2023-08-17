@@ -81,61 +81,41 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   hintButton(){
-
     if(state.currHints == 3)
     {
       return;  
     }
+
     List<List<SudokuNumber>> grid = [
       for (var sublist in state.grid) [...sublist]
     ];
 
+    List index = List<int>.generate(80, (i) => (i + 1), growable: true);
+    index.shuffle();
+
     int row = 0;
     int col = 0;
-    int dice = 0;
-    bool foundCell = false;
+   
+    for(int i = 0; i < index.length; i++)
+    {
+      row = (index[i] / 9).floor();
+      col = index[i] % 9;
 
-    do {
-      row = Random().nextInt(8);
-      col = Random().nextInt(8);
-    }while(grid[row][col].num != 0);
+      if(grid[row][col].num == 0)
+      {
+        break;
+      }
+    }
 
-    // while(grid[row][col].num != 0)
-    // {
-    //   dice = Random().nextInt(10);
-    //   if(dice == 4)
-    //   {
-    //     foundCell = true;
-    //     break;
-    //   }
-    //   if(col < 8)
-    //     col++;
-    //   else 
-    //   {
-    //     col = 0; 
-    //     row++;
-    //   }
-    // }
-
-    // if(!foundCell)
-    // {
-    //   row = 0;
-    //   col = 0;
-      
-    //   while(grid[row][col].num != 0)
-    //   {
-    //     if(col < 8)
-    //       col++;
-    //     else 
-    //     {
-    //       col = 0; 
-    //       row++;
-    //     }
-    //   }
-    // }
+    if(grid[row][col].num != 0)
+    {
+      row = 0;
+      col = 0;
+    }
 
     SudokuNumber temp = SudokuNumber();
     temp.num = solvedGrid[row][col];
+    
 
     List<int> numCountTemp =
         List.generate(9, (index) => state.numberCount[index]);
@@ -150,6 +130,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
           currMistakes:
               (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
           currHints: state.currHints + 1,
-          numberCount: temp.isCorrect ? numCountTemp : state.numberCount);       
+          numberCount: temp.isCorrect ? numCountTemp : state.numberCount);     
   }
 }
