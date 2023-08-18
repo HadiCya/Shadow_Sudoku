@@ -67,18 +67,11 @@ class GameStateNotifier extends StateNotifier<GameState> {
       return;
     }
     undoStack.pop();
-
-    
-
     if (undoStack.isEmpty) {
       state = state.copyWith(grid: initialGrid, numberCount: numberCount);
       return;
     }
-
-    
     state = undoStack.peek;
-
-    
   }
 
   eraseButton() {
