@@ -50,7 +50,7 @@ class BottomSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: () async{
-        var (ig, sg, nc) = await gridGenerator(difficultyOptions.easy);
+        var (ig, sg, nc) = await gridGenerator(difficulty);
         initialGrid = ig; solvedGrid = sg; numberCount = nc;
         gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
         (ref) => GameStateNotifier());
