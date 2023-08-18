@@ -52,7 +52,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
     }
     if (input == 0 &&
         grid[state.i][state.j].num != 0 &&
-        !grid[state.i][state.j].isSystemGenerated) {
+        !grid[state.i][state.j].isSystemGenerated
+        ) {
       if (grid[state.i][state.j].isCorrect) {
         numCountTemp[grid[state.i][state.j].num - 1]--;
       }
@@ -69,11 +70,18 @@ class GameStateNotifier extends StateNotifier<GameState> {
       return;
     }
     undoStack.pop();
+
+    
+
     if (undoStack.isEmpty) {
       state = state.copyWith(grid: initialGrid, numberCount: numberCount);
       return;
     }
+
+    
     state = undoStack.peek;
+
+    
   }
 
   eraseButton() {
@@ -115,7 +123,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
     SudokuNumber temp = SudokuNumber();
     temp.num = solvedGrid[row][col];
-    
+    temp.isSystemGenerated = true;   
 
     List<int> numCountTemp =
         List.generate(9, (index) => state.numberCount[index]);
@@ -123,6 +131,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
       grid[row][col] = temp;
         numCountTemp[temp.num - 1]++;
     }
+    
     state = state.copyWith(
           grid: grid,
           currHints: state.currHints + 1,
