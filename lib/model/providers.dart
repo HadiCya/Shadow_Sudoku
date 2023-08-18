@@ -121,15 +121,12 @@ class GameStateNotifier extends StateNotifier<GameState> {
         List.generate(9, (index) => state.numberCount[index]);
     if (grid[row][col].num == 0) {
       grid[row][col] = temp;
-      if (temp.isCorrect) {
         numCountTemp[temp.num - 1]++;
-      }
     }
     state = state.copyWith(
           grid: grid,
-          currMistakes:
-              (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
           currHints: state.currHints + 1,
-          numberCount: temp.isCorrect ? numCountTemp : state.numberCount);     
+          numberCount: numCountTemp,
+    ); 
   }
 }
