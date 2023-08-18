@@ -55,7 +55,6 @@ generateBoardWithDifficulty(
       int y = c.getPosition()!.grid!.y.toInt();
       int tempC = c.getValue()!;
       if (tempC == 0 && (rng.nextInt(10) > difficultyMod)) {
-        print("HARD");
         tempC = solvedBoard.cellAt(Position(row: r, column: y)).getValue()!;
       }
       if (tempC != 0) {
