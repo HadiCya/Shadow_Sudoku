@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shadow_sudoku/model/dialogWidgets.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:sudoku_api/sudoku_api.dart';
 
@@ -8,6 +9,7 @@ import 'model/gameState.dart';
 import 'model/gridGenerator.dart';
 import 'model/providers.dart';
 import 'model/frontPageWidgets.dart';
+import 'model/dialogWidgets.dart';
 
 class FrontPageHome extends StatelessWidget {
   @override
@@ -86,9 +88,7 @@ class FrontPageHome extends StatelessWidget {
 
                   SizedBox(height: 25),
 
-                  //FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
-
-                 
+                  //FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),                 
                     FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     
                   
