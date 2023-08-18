@@ -8,25 +8,24 @@ import '../main.dart';
 import '../view/sudokuWidget.dart';
 import 'gameState.dart';
 import 'gridGenerator.dart';
+import 'providers.dart';
 
 
 class dialogText extends ConsumerWidget {
 
-  final String textAttribute;
-  
+  // final String textAttribute;
+  final GameStats gameStats;
 
-  const dialogText({super.key, required this.textAttribute});
+  dialogText(this.gameStats);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameState = ref.watch(gameStateController);
+    List<int> statsList = [gameState.currMistakes, gameState.currHints, 0, 0];
     return Align(
       alignment: const Alignment(-0.5, 0.5),
       child: Text(
-        textAttribute == "\t\tMistakes" ? "$textAttribute: ${gameState.currMistakes}" : 
-        textAttribute == "Hints" ? "$textAttribute: ${gameState.currHints}" : 
-        textAttribute == "Time" ? "$textAttribute: ${gameState.currHints}":
-        textAttribute,
+        gameStats.text  + statsList[gameStats.stats].toString(),
         textAlign: TextAlign.start,
         style: const TextStyle(
         color: Colors.white, 
@@ -83,19 +82,18 @@ class winLoseDialog extends ConsumerWidget{
               const SizedBox(
                 height: 10,
               ),
-              const dialogText(
-                  textAttribute: "Time"),
+              dialogText(
+                  GameStats.time),
               const SizedBox(
                 height: 10,
               ),
-              const dialogText(
-                  textAttribute: "Hints"),
+              dialogText(
+                  GameStats.hints),
               const SizedBox(
                 height: 10,
               ),
-              const dialogText(
-                  textAttribute:
-                      "\t\tMistakes"),
+              dialogText(
+                  winStatus ? GameStats.mistakes: GameStats.none),
             ],
           )),
       
@@ -137,5 +135,40 @@ class winLoseDialog extends ConsumerWidget{
     ],
   );
  }
+}
+
+  enum GameStats{
+  mistakes,
+  hints,
+  time, 
+  none
+}
+
+extension GameStatExtension on GameStats{
+  String get text {
+    switch(this){
+      case GameStats.mistakes:
+        return "\t\tMistakes: ";
+      case GameStats.hints:
+        return "Hints: ";
+      case GameStats.time:
+        return "Time: ";
+      case GameStats.none:
+        return "";
+    }
+  }
+
+  int get stats{
+    switch(this){
+      case GameStats.mistakes:
+        return 0;
+      case GameStats.hints:
+        return 1;
+      case GameStats.time:
+        return 2;
+      case GameStats.none:
+        return 3;
+    }
+  }
 }
 
