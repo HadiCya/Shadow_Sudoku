@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:math';
 
 var gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
     (ref) => GameStateNotifier());
@@ -127,5 +125,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
           currHints: state.currHints + 1,
           numberCount: numCountTemp,
     ); 
+
+    return state.checkWinStatus();
   }
 }

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shadow_sudoku/model/dialogWidgets.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
-import 'package:sudoku_api/sudoku_api.dart';
 
-import 'main.dart';
-import 'model/gameState.dart';
-import 'model/gridGenerator.dart';
-import 'model/providers.dart';
 import 'model/frontPageWidgets.dart';
-import 'model/dialogWidgets.dart';
 
 class FrontPageHome extends StatelessWidget {
+  const FrontPageHome({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,29 +22,29 @@ class FrontPageHome extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Shadow Sudoku",
+                  const Text("Shadow Sudoku",
                       style: TextStyle(
                         fontSize: 50,
                         color: Colors.white,
                         fontWeight: FontWeight.w200,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 300,
                   ),
                   GestureDetector(
-                    child:FrontPageButton(
+                    child:const FrontPageButton(
                       buttonText: "New Game",
                       buttonColor: Color.fromARGB(255, 164, 75, 170),
                       ),
                       onTap: () => (
                         showModalBottomSheet(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(50),
                               topRight: Radius.circular(50),
                             ),
                           ),
-                          backgroundColor: Color.fromARGB(255, 31, 31, 31),
+                          backgroundColor: const Color.fromARGB(255, 31, 31, 31),
                           constraints: BoxConstraints.tight(Size(
                             MediaQuery.of(context).size.width,
                             MediaQuery.of(context).size.height > 700 ?
@@ -61,15 +55,15 @@ class FrontPageHome extends StatelessWidget {
                             return Column(
                               children: [
                                 Container(height: 20,),
-                                BottomSheetButton(buttonText: "Easy", difficulty: 0),
-                                SizedBox(height: 20,),
-                                BottomSheetDivider(),
-                                SizedBox(height: 20,),
-                                BottomSheetButton(buttonText: "Medium", difficulty: 1),
-                                SizedBox(height: 20,),
-                                BottomSheetDivider(),
-                                SizedBox(height: 20,),
-                                BottomSheetButton(buttonText: "Hard", difficulty: 2),
+                                const BottomSheetButton(buttonText: "Easy", difficulty: 0),
+                                const SizedBox(height: 20,),
+                                const BottomSheetDivider(),
+                                const SizedBox(height: 20,),
+                                const BottomSheetButton(buttonText: "Medium", difficulty: 1),
+                                const SizedBox(height: 20,),
+                                const BottomSheetDivider(),
+                                const SizedBox(height: 20,),
+                                const BottomSheetButton(buttonText: "Hard", difficulty: 2),
                               ],
                             );
                           }
@@ -77,19 +71,19 @@ class FrontPageHome extends StatelessWidget {
                     )
                   ),
 
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   GestureDetector(
-                    child: FrontPageButton(buttonText: "Continue", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                    child: const FrontPageButton(buttonText: "Continue", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     onTap: () => (
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SudokuWidget()))
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SudokuWidget()))
                     ),
                   ),
 
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   //FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),                 
-                    FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                    const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     
                   
                 ],

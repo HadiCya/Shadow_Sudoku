@@ -29,13 +29,13 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios_new),
+          child: const Icon(Icons.arrow_back_ios_new),
           onTap: () => (
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FrontPageHome())),
+                MaterialPageRoute(builder: (context) => const FrontPageHome())),
           ),
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: shadowPurple,
         ),
         backgroundColor: Colors.transparent,
@@ -100,7 +100,15 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
                     onPressed: () {
-                      ref.read(gameStateController.notifier).hintButton();
+                      var winStatus = ref.read(gameStateController.notifier).hintButton();
+                      if (winStatus != null) {
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => 
+                                       winLoseDialog(winStatus)
+                                );
+                            }
                     },
                   ),
                 ],
@@ -130,97 +138,9 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                                 showDialog(
                                   barrierDismissible: false,
                                   context: context,
-                                  builder: (context) => SimpleDialog(
-                                        backgroundColor: Colors.transparent,
-                                        contentPadding: EdgeInsets.zero,
-                                        children: [
-                                          Container(
-                                              height: 250,
-                                              width: 200,
-                                              decoration: BoxDecoration(
-                                                color: Color.fromARGB(
-                                                    255, 81, 82, 84),
-                                                border: Border.all(
-                                                    color: Color.fromARGB(
-                                                        255, 62, 62, 64),
-                                                    width: 4),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(winStatus ? "You Win" : "You Lose",
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 50,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      )),
-                                                  Divider(
-                                                    color: Color.fromARGB(
-                                                        255, 62, 62, 64),
-                                                    thickness: 5,
-                                                    indent: 20,
-                                                    endIndent: 20,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  dialogText(
-                                                      textAttribute: "Time"),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  dialogText(
-                                                      textAttribute: "Hints"),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  dialogText(
-                                                      textAttribute:
-                                                          "\t\tMistakes"),
-                                                ],
-                                              )),
-                                          
-                                          GestureDetector(
-                                            child: Transform.translate(
-                                              offset: Offset(0, -25),
-                                              child: Center(
-                                                child: Container(
-                                                  height: 50,
-                                                  width: 200,
-                                                  decoration: BoxDecoration(
-                                                    color: shadowPurple,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                  ),
-                                                  child: Align(
-                                                      alignment: Alignment.center,
-                                                      child: Text("Back to Menu",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontSize: 30,
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ))),
-                                                ),
-                                              )),
-                                            onTap: () async{
-                                              var (ig, sg, nc) = await gridGenerator();
-                                              initialGrid = ig; solvedGrid = sg; numberCount = nc;
-                                              gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
-                                              (ref) => GameStateNotifier());
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => FrontPageHome(),));
-                                            },
-                                            
-                                          ),
-                                        ],
-                                      )  );
+                                  builder: (context) => 
+                                       winLoseDialog(winStatus)
+                                );
                             }
 
                           
