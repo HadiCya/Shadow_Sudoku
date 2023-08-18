@@ -45,7 +45,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
               (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
           numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
       undoStack.push(state);
-      return state.checkWinStatus();
+      var winStatus = state.checkWinStatus();
+      if (winStatus != null) {
+        winStatus ? print("You win!") : print("You lose!"); //Temporary
+      }
     }
     if (input == 0 &&
         grid[state.i][state.j].num != 0 &&
