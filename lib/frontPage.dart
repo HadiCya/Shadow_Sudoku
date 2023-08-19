@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 import 'model/frontPageWidgets.dart';
+import 'model/gridGenerator.dart';
 
 class FrontPageHome extends StatelessWidget {
   const FrontPageHome({super.key});

@@ -125,7 +125,7 @@ class winLoseDialog extends ConsumerWidget{
             ),
           )),
         onTap: () async{
-          var (ig, sg, nc) = await gridGenerator();
+          var (ig, sg, nc) = await gridGenerator(difficultyOptions.easy);
           initialGrid = ig; solvedGrid = sg; numberCount = nc;
           gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
           (ref) => GameStateNotifier());
