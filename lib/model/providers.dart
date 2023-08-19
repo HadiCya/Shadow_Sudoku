@@ -44,22 +44,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
           numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
       return state.checkWinStatus();
     }
-    if (input == 0 &&
-        grid[state.i][state.j].num != 0 &&
-        !grid[state.i][state.j].isSystemGenerated
-        ) {
-      if (grid[state.i][state.j].isCorrect) {
-        numCountTemp[grid[state.i][state.j].num - 1]--;
-      }
-      grid[state.i][state.j] = temp;
-      state = state.copyWith(
-          grid: grid,
-          numberCount: numCountTemp);
-    }
-  }
-
-  eraseButton() {
-    updatePosition(0);
   }
 
   hintButton(){
@@ -88,7 +72,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
         break;
       }
     }
-
+    
     if(grid[row][col].num != 0)
     {
       row = 0;
@@ -114,4 +98,22 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
     return state.checkWinStatus();
   }
+    
+  eraseButton() {
+    SudokuNumber temp = SudokuNumber();
+    List<List<SudokuNumber>> grid = [
+      for (var sublist in state.grid) [...sublist]
+    ];
+    List<int> numCountTemp =
+        List.generate(9, (index) => state.numberCount[index]);
+    if (grid[state.i][state.j].num != 0 &&
+        !grid[state.i][state.j].isSystemGenerated) {
+      if (grid[state.i][state.j].isCorrect) {
+        numCountTemp[grid[state.i][state.j].num - 1]--;
+      }
+      grid[state.i][state.j] = temp;
+      state = state.copyWith(grid: grid, numberCount: numCountTemp);
+      undoStack.push(state);
+    }
+
 }
