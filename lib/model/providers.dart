@@ -15,6 +15,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
             grid: initialGrid,
             currMistakes: 0,
             maxMistakes: 3,
+            elapsedMinutes: 0,
+            elaspedSeconds: 0,
             numberCount: numberCount));
 
   highlightNumbers(box, pos) {
@@ -75,6 +77,15 @@ class GameStateNotifier extends StateNotifier<GameState> {
       grid[state.i][state.j] = temp;
       state = state.copyWith(grid: grid, numberCount: numCountTemp);
       undoStack.push(state);
+    }
+  }
+
+  gameTimer(Stopwatch timer)
+  {
+    if(timer.elapsed == 60)
+    {
+      state = state.copyWith(elapsedMinutes: state.elapsedMinutes + 1);
+      timer.reset();
     }
   }
 }
