@@ -42,7 +42,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
           currMistakes:
               (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
           numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
-      undoStack.push(state);
       return state.checkWinStatus();
     }
     if (input == 0 &&
@@ -56,20 +55,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
       state = state.copyWith(
           grid: grid,
           numberCount: numCountTemp);
-      undoStack.push(state);
     }
-  }
-
-  undoButton() {
-    if (undoStack.isEmpty) {
-      return;
-    }
-    undoStack.pop();
-    if (undoStack.isEmpty) {
-      state = state.copyWith(grid: initialGrid, numberCount: numberCount);
-      return;
-    }
-    state = undoStack.peek;
   }
 
   eraseButton() {
@@ -77,10 +63,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   hintButton(){
-    // if(state.currHints == 3)
-    // {
-    //   return;  
-    // }
+    if(state.currHints == 3)
+    {
+      return;  
+    }
 
     List<List<SudokuNumber>> grid = [
       for (var sublist in state.grid) [...sublist]

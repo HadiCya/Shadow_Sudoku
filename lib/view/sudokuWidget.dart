@@ -83,12 +83,6 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Row(
                 children: [
                   ActionButton(
-                      buttonText: "Undo",
-                      icon: CupertinoIcons.arrow_counterclockwise,
-                      onPressed: () {
-                        ref.read(gameStateController.notifier).undoButton();
-                      }),
-                  ActionButton(
                       buttonText: "Erase",
                       icon: CupertinoIcons.xmark,
                       onPressed: () {

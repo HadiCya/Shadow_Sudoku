@@ -6,7 +6,6 @@ import 'package:shadow_sudoku/model/stack.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 var initialGrid, solvedGrid, numberCount;
-final undoStack = NewStack<GameState>();
 
 void main() {
   runApp(const ProviderScope(
