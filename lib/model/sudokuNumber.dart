@@ -1,6 +1,6 @@
 class SudokuNumber {
   int num;
-  bool isSystemGenerated, isCorrect, isHint;
+  bool isSystemGenerated, isCorrect;
 
-  SudokuNumber({this.num = 0, this.isSystemGenerated = false, this.isCorrect = true, this.isHint = false});
+  SudokuNumber({this.num = 0, this.isSystemGenerated = false, this.isCorrect = true});
 }

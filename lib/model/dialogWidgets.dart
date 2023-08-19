@@ -117,7 +117,7 @@ class winLoseDialog extends ConsumerWidget{
                       textAlign:
                           TextAlign.center,
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         color: Colors.white,
                         fontWeight:
                             FontWeight.w400,

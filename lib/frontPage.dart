@@ -81,8 +81,7 @@ class FrontPageHome extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 25),
-
-                  //FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),                 
+                                  
                     const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     
                   

@@ -10,7 +10,6 @@ import 'gridGenerator.dart';
 class FrontPageButton extends StatelessWidget {
   final String buttonText;
   final Color buttonColor;
-  // final GestureDetector;
 
   const FrontPageButton(
       {super.key,
