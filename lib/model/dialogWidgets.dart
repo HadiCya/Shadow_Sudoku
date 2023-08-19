@@ -21,11 +21,11 @@ class dialogText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameState = ref.watch(gameStateController);
-    List<int> statsList = [gameState.currMistakes, gameState.currHints, 0, 0];
+    List<int> statsList = [gameState.currMistakes, gameState.currHints, 0];
     return Align(
       alignment: const Alignment(-0.5, 0.5),
       child: Text(
-        gameStats.text  + statsList[gameStats.stats].toString(),
+        gameStats.text + statsList[gameStats.stats].toString(),
         textAlign: TextAlign.start,
         style: const TextStyle(
         color: Colors.white, 
@@ -92,8 +92,9 @@ class winLoseDialog extends ConsumerWidget{
               const SizedBox(
                 height: 10,
               ),
-              dialogText(
-                  winStatus ? GameStats.mistakes: GameStats.none),
+              // dialogText(
+              //     winStatus ? GameStats.mistakes: GameStats.none),
+              winStatus ? dialogText(GameStats.mistakes): Container(),
             ],
           )),
       

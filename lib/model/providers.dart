@@ -77,10 +77,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   hintButton(){
-    if(state.currHints == 3)
-    {
-      return;  
-    }
+    // if(state.currHints == 3)
+    // {
+    //   return;  
+    // }
 
     List<List<SudokuNumber>> grid = [
       for (var sublist in state.grid) [...sublist]
