@@ -13,9 +13,11 @@ class GameState {
       required this.grid,
       required this.currMistakes,
       required this.maxMistakes,
+      required this.currHints,
+      required this.maxHints,
       required this.numberCount});
 
-  final int i, j, currMistakes, maxMistakes;
+  final int i, j, currMistakes, maxMistakes, currHints, maxHints;
   final List<int> numberCount;
   final SudokuNumber num;
   final List<List<SudokuNumber>> grid;
@@ -27,6 +29,8 @@ class GameState {
       List<List<SudokuNumber>>? grid,
       int? currMistakes,
       int? maxMistakes,
+      int? currHints,
+      int? maxHints,
       List<int>? numberCount}) {
     return GameState(
         i: i ?? this.i,
@@ -35,6 +39,8 @@ class GameState {
         grid: grid ?? this.grid,
         currMistakes: currMistakes ?? this.currMistakes,
         maxMistakes: maxMistakes ?? this.maxMistakes,
+        currHints: currHints ?? this.currHints,
+        maxHints: maxHints ?? this.maxHints,
         numberCount: numberCount ?? this.numberCount);
   }
 

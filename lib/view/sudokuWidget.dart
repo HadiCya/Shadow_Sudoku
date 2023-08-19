@@ -7,6 +7,11 @@ import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
+import '../main.dart';
+import '../model/dialogWidgets.dart';
+import '../model/gameState.dart';
+import '../model/gridGenerator.dart';
+
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
 
 class SudokuWidget extends ConsumerStatefulWidget {
@@ -24,13 +29,13 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios_new),
+          child: const Icon(Icons.arrow_back_ios_new),
           onTap: () => (
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FrontPageHome())),
+                MaterialPageRoute(builder: (context) => const FrontPageHome())),
           ),
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: shadowPurple,
         ),
         backgroundColor: Colors.transparent,
@@ -67,16 +72,16 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Text(
                       "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
                 ),
+                Positioned(
+                  right: 15,
+                  top: (MediaQuery.of(context).size.height / 12),
+                  child: Text(
+                      "Hints: ${gameState.currHints}/${gameState.maxHints}"),
+                ),
               ]),
               Expanded(
                   child: Row(
                 children: [
-                  ActionButton(
-                      buttonText: "Undo",
-                      icon: CupertinoIcons.arrow_counterclockwise,
-                      onPressed: () {
-                        ref.read(gameStateController.notifier).undoButton();
-                      }),
                   ActionButton(
                       buttonText: "Erase",
                       icon: CupertinoIcons.xmark,
@@ -85,8 +90,21 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                       }),
                   const ActionButton(
                       buttonText: "Notes", icon: CupertinoIcons.pencil),
-                  const ActionButton(
-                      buttonText: "Hint", icon: CupertinoIcons.lightbulb),
+                  ActionButton(
+                    buttonText: "Hint",
+                    icon: CupertinoIcons.lightbulb,
+                    onPressed: () {
+                      var winStatus = ref.read(gameStateController.notifier).hintButton();
+                      if (winStatus != null) {
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => 
+                                       winLoseDialog(winStatus)
+                                );
+                            }
+                    },
+                  ),
                 ],
               )),
               Expanded(
@@ -109,9 +127,17 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                             splashFactory: NoSplash.splashFactory,
                           ),
                           onPressed: () {
-                            ref
-                                .read(gameStateController.notifier)
-                                .updatePosition(i);
+                            var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
+                            if (winStatus != null) {
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => 
+                                       winLoseDialog(winStatus)
+                                );
+                            }
+
+                          
                           },
                           child: Text("$i",
                               style: const TextStyle(
