@@ -116,14 +116,14 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   top: (MediaQuery.of(context).size.height / 12),
                   child: Text(
                       "Hints: ${gameState.currHints}/${gameState.maxHints}"),
-                // Positioned(
-                //   left: 175,
-                //   top: (MediaQuery.of(context).size.height / 12),
-                //   child: Text(
-                //       "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
-                //       style: TextStyle(color: shadowPurple),),                    
                 ),
-                // ),)
+                Positioned(
+                  left: 175,
+                  top: (MediaQuery.of(context).size.height / 12),
+                  child: Text(
+                      "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
+                      style: TextStyle(color: shadowPurple),),                    
+                ),
                 //       style: TextStyle(color: shadowPurple),),
                       
                 // ),

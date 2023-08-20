@@ -13,33 +13,13 @@ class GameState {
       required this.grid,
       required this.currMistakes,
       required this.maxMistakes,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d
       required this.currHints,
       required this.maxHints,
-      required this.numberCount});
-
-  final int i, j, currMistakes, maxMistakes, currHints, maxHints;
-<<<<<<< HEAD
-=======
       required this.elapsedMinutes,
       required this.elaspedSeconds,
       required this.numberCount});
 
-  final int i, j, currMistakes, maxMistakes, elapsedMinutes, elaspedSeconds;
->>>>>>> 1fefdb5 (Visible timer)
-=======
-      required this.currHints,
-      required this.maxHints,
-      required this.numberCount});
-
-  final int i, j, currMistakes, maxMistakes, currHints, maxHints;
->>>>>>> 989214b (Merge Fixes)
-=======
->>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d
+  final int i, j, currMistakes, maxMistakes, currHints, maxHints, elapsedMinutes, elaspedSeconds;
   final List<int> numberCount;
   final SudokuNumber num;
   final List<List<SudokuNumber>> grid;
@@ -51,25 +31,10 @@ class GameState {
       List<List<SudokuNumber>>? grid,
       int? currMistakes,
       int? maxMistakes,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       int? currHints,
       int? maxHints,
-=======
       int? elapsedMinutes,
       int? elaspedSeconds,
->>>>>>> 1fefdb5 (Visible timer)
-=======
-      int? currHints,
-      int? maxHints,
-
->>>>>>> 989214b (Merge Fixes)
-=======
-      int? currHints,
-      int? maxHints,
-
->>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d
       List<int>? numberCount}) {
     return GameState(
         i: i ?? this.i,
@@ -78,23 +43,10 @@ class GameState {
         grid: grid ?? this.grid,
         currMistakes: currMistakes ?? this.currMistakes,
         maxMistakes: maxMistakes ?? this.maxMistakes,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         currHints: currHints ?? this.currHints,
         maxHints: maxHints ?? this.maxHints,
-=======
         elapsedMinutes: elapsedMinutes ?? this.elapsedMinutes,
         elaspedSeconds: elaspedSeconds ?? this.elaspedSeconds,
->>>>>>> 1fefdb5 (Visible timer)
-=======
-        currHints: currHints ?? this.currHints,
-        maxHints: maxHints ?? this.maxHints,
->>>>>>> 989214b (Merge Fixes)
-=======
-        currHints: currHints ?? this.currHints,
-        maxHints: maxHints ?? this.maxHints,
->>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d
         numberCount: numberCount ?? this.numberCount);
   }
 
