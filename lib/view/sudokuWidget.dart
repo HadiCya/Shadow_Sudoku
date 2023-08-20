@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,10 @@ import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
+import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import 'package:shadow_sudoku/view/sudokuWidget.dart';
+
+import 'sudokuWidget.dart';
 
 import '../main.dart';
 import '../model/dialogWidgets.dart';
@@ -13,6 +19,7 @@ import '../model/gameState.dart';
 import '../model/gridGenerator.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
+
 
 class SudokuWidget extends ConsumerStatefulWidget {
   const SudokuWidget({super.key});
@@ -22,9 +29,46 @@ class SudokuWidget extends ConsumerStatefulWidget {
 }
 
 class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
+
+  Duration duration = Duration();
+  Timer? timer;
+
+  @override
+  void initState(){
+    super.initState();
+
+    startTimer();
+  }
+
+  void addTime(){
+    final addSeconds = 1;
+
+    setState((){
+      final seconds = duration.inSeconds + addSeconds;
+
+      duration = Duration(seconds: seconds);
+    });
+  }
+
+  void startTimer(){
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final Stopwatch timer = Stopwatch();
+    twoDigits(int n) => n.toString().padLeft(2, '0');
+    // final minutes = twoDigits(duration.inMinutes.remainder(60));
+    // final seconds = twoDigits(duration.inSeconds.remainder(60));
     final gameState = ref.watch(gameStateController);
+
+    gameState.copyWith(elapsedMinutes: duration.inMinutes);
+    gameState.copyWith(elaspedSeconds: duration.inSeconds);
+    // if(timer.elapsed == 60)
+    // {
+    //   gameState.copyWith(elapsedMinutes: gameState.elapsedMinutes + 1);
+    //   timer.reset();
+    // }
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -72,11 +116,22 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Text(
                       "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
                 ),
+<<<<<<< HEAD
                 Positioned(
                   right: 15,
                   top: (MediaQuery.of(context).size.height / 12),
                   child: Text(
                       "Hints: ${gameState.currHints}/${gameState.maxHints}"),
+=======
+
+                Positioned(
+                  left: 175,
+                  top: (MediaQuery.of(context).size.height / 12),
+                  child: Text(
+                      "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
+                      style: TextStyle(color: shadowPurple),),
+                      
+>>>>>>> 1fefdb5 (Visible timer)
                 ),
               ]),
               Expanded(
