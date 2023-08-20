@@ -59,11 +59,6 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
 
     gameState.copyWith(elapsedMinutes: duration.inMinutes);
     gameState.copyWith(elaspedSeconds: duration.inSeconds);
-    // if(timer.elapsed == 60)
-    // {
-    //   gameState.copyWith(elapsedMinutes: gameState.elapsedMinutes + 1);
-    //   timer.reset();
-    // }
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

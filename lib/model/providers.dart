@@ -79,13 +79,4 @@ class GameStateNotifier extends StateNotifier<GameState> {
       undoStack.push(state);
     }
   }
-
-  gameTimer(Stopwatch timer)
-  {
-    if(timer.elapsed == 60)
-    {
-      state = state.copyWith(elapsedMinutes: state.elapsedMinutes + 1);
-      timer.reset();
-    }
-  }
 }
