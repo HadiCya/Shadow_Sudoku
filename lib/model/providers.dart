@@ -17,6 +17,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
             maxMistakes: 3,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             currHints: 0,
             maxHints: 3,
 =======
@@ -27,6 +28,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
             currHints: 0,
             maxHints: 3,
 >>>>>>> 989214b (Merge Fixes)
+=======
+            currHints: 0,
+            maxHints: 3,
+>>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d
             numberCount: numberCount));
 
   highlightNumbers(box, pos) {
@@ -128,6 +133,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
 
@@ -146,3 +152,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
 =======
 }
 >>>>>>> 989214b (Merge Fixes)
+=======
+}
+>>>>>>> 989214b0e0c79dce48dd2f2b10ea9fe045441c0d

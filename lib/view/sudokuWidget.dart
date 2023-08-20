@@ -124,6 +124,9 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                 //       style: TextStyle(color: shadowPurple),),                    
                 ),
                 // ),)
+                //       style: TextStyle(color: shadowPurple),),
+                      
+                // ),
               ]),
               Expanded(
                   child: Row(
