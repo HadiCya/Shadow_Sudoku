@@ -121,6 +121,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     }
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
 
@@ -132,5 +133,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
       timer.reset();
     }
   }
+=======
+>>>>>>> 7e00705 (Removed unneeded code)
 }
 >>>>>>> 1fefdb5 (Visible timer)
