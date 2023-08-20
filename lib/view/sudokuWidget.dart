@@ -62,8 +62,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
     // final seconds = twoDigits(duration.inSeconds.remainder(60));
     final gameState = ref.watch(gameStateController);
 
-    gameState.copyWith(elapsedMinutes: duration.inMinutes);
-    gameState.copyWith(elaspedSeconds: duration.inSeconds);
+    // gameState.copyWith(elapsedMinutes: duration.inMinutes);
+    // gameState.copyWith(elaspedSeconds: duration.inSeconds);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -111,23 +111,19 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Text(
                       "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
                 ),
-<<<<<<< HEAD
                 Positioned(
                   right: 15,
                   top: (MediaQuery.of(context).size.height / 12),
                   child: Text(
                       "Hints: ${gameState.currHints}/${gameState.maxHints}"),
-=======
-
-                Positioned(
-                  left: 175,
-                  top: (MediaQuery.of(context).size.height / 12),
-                  child: Text(
-                      "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
-                      style: TextStyle(color: shadowPurple),),
-                      
->>>>>>> 1fefdb5 (Visible timer)
+                // Positioned(
+                //   left: 175,
+                //   top: (MediaQuery.of(context).size.height / 12),
+                //   child: Text(
+                //       "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
+                //       style: TextStyle(color: shadowPurple),),                    
                 ),
+                // ),)
               ]),
               Expanded(
                   child: Row(
