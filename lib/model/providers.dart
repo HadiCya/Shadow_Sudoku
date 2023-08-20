@@ -15,8 +15,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
             grid: initialGrid,
             currMistakes: 0,
             maxMistakes: 3,
-            elapsedMinutes: 0,
-            elaspedSeconds: 0,
+            currHints: 0,
+            maxHints: 3,
             numberCount: numberCount));
 
   highlightNumbers(box, pos) {
@@ -42,26 +42,63 @@ class GameStateNotifier extends StateNotifier<GameState> {
           currMistakes:
               (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
           numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
-      undoStack.push(state);
-      var winStatus = state.checkWinStatus();
-      if (winStatus != null) {
-        winStatus ? print("You win!") : print("You lose!"); //Temporary
+      return state.checkWinStatus();
+    }
+  }
+
+  hintButton(){
+    if(state.currHints == 3)
+    {
+      return;  
+    }
+
+    List<List<SudokuNumber>> grid = [
+      for (var sublist in state.grid) [...sublist]
+    ];
+
+    List index = List<int>.generate(80, (i) => (i + 1), growable: true);
+    index.shuffle();
+
+    int row = 0;
+    int col = 0;
+   
+    for(int i = 0; i < index.length; i++)
+    {
+      row = (index[i] / 9).floor();
+      col = index[i] % 9;
+
+      if(grid[row][col].num == 0)
+      {
+        break;
       }
     }
-  }
-
-  undoButton() {
-    if (undoStack.isEmpty) {
-      return;
+    
+    if(grid[row][col].num != 0)
+    {
+      row = 0;
+      col = 0;
     }
-    undoStack.pop();
-    if (undoStack.isEmpty) {
-      state = state.copyWith(grid: initialGrid, numberCount: numberCount);
-      return;
-    }
-    state = undoStack.peek;
-  }
 
+    SudokuNumber temp = SudokuNumber();
+    temp.num = solvedGrid[row][col];
+    temp.isSystemGenerated = true;   
+
+    List<int> numCountTemp =
+        List.generate(9, (index) => state.numberCount[index]);
+    if (grid[row][col].num == 0) {
+      grid[row][col] = temp;
+        numCountTemp[temp.num - 1]++;
+    }
+    
+    state = state.copyWith(
+          grid: grid,
+          currHints: state.currHints + 1,
+          numberCount: numCountTemp,
+    ); 
+
+    return state.checkWinStatus();
+  }
+    
   eraseButton() {
     SudokuNumber temp = SudokuNumber();
     List<List<SudokuNumber>> grid = [
@@ -76,7 +113,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
       }
       grid[state.i][state.j] = temp;
       state = state.copyWith(grid: grid, numberCount: numCountTemp);
-      undoStack.push(state);
     }
   }
 }

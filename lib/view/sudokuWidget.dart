@@ -57,8 +57,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
     // final seconds = twoDigits(duration.inSeconds.remainder(60));
     final gameState = ref.watch(gameStateController);
 
-    gameState.copyWith(elapsedMinutes: duration.inMinutes);
-    gameState.copyWith(elaspedSeconds: duration.inSeconds);
+    // gameState.copyWith(elapsedMinutes: duration.inMinutes);
+    // gameState.copyWith(elaspedSeconds: duration.inSeconds);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -107,24 +107,18 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                       "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
                 ),
 
-                Positioned(
-                  left: 175,
-                  top: (MediaQuery.of(context).size.height / 12),
-                  child: Text(
-                      "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
-                      style: TextStyle(color: shadowPurple),),
+                // Positioned(
+                //   left: 175,
+                //   top: (MediaQuery.of(context).size.height / 12),
+                //   child: Text(
+                //       "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
+                //       style: TextStyle(color: shadowPurple),),
                       
-                ),
+                // ),
               ]),
               Expanded(
                   child: Row(
                 children: [
-                  ActionButton(
-                      buttonText: "Undo",
-                      icon: CupertinoIcons.arrow_counterclockwise,
-                      onPressed: () {
-                        ref.read(gameStateController.notifier).undoButton();
-                      }),
                   ActionButton(
                       buttonText: "Erase",
                       icon: CupertinoIcons.xmark,
