@@ -21,11 +21,17 @@ class dialogText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameState = ref.watch(gameStateController);
-    List<int> statsList = [gameState.currMistakes, gameState.currHints, 0];
+    List<int> statsList = [gameState.currMistakes, gameState.currHints, gameState.time];
+
+    twoDigits(int n) => n.toString().padLeft(2, '0');    
+    final int minutes = (gameState.time / 60).floor();
+    final seconds = twoDigits(gameState.time % 60);
+
     return Align(
       alignment: const Alignment(-0.5, 0.5),
       child: Text(
-        gameStats.text + statsList[gameStats.stats].toString(),
+        gameStats != GameStats.time ? gameStats.text + statsList[gameStats.stats].toString() : 
+        "Time: " + minutes.toString() + ":" + seconds.toString(),
         textAlign: TextAlign.start,
         style: const TextStyle(
         color: Colors.white, 
