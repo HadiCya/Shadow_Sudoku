@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
 
   Duration duration = Duration();
   Timer? timer;
+  bool justOpended = true;
 
   @override
   void initState(){
@@ -56,20 +58,26 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final Stopwatch timer = Stopwatch();
-    twoDigits(int n) => n.toString().padLeft(2, '0');
-    // final minutes = twoDigits(duration.inMinutes.remainder(60));
-    // final seconds = twoDigits(duration.inSeconds.remainder(60));
+
     final gameState = ref.watch(gameStateController);
 
-    // gameState.copyWith(elapsedMinutes: duration.inMinutes);
-    // gameState.copyWith(elaspedSeconds: duration.inSeconds);
+    twoDigits(int n) => n.toString().padLeft(2, '0');    
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    if(justOpended)
+    {
+      duration = Duration(seconds: gameState.time);
+      justOpended = false;
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (
+          onTap: () => (          
+            ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FrontPageHome())),
           ),
@@ -121,12 +129,9 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   left: 175,
                   top: (MediaQuery.of(context).size.height / 12),
                   child: Text(
-                      "Time: ${gameState.elapsedMinutes}:${gameState.elaspedSeconds}",
+                      "Time: ${minutes}:${seconds}",
                       style: TextStyle(color: shadowPurple),),                    
                 ),
-                //       style: TextStyle(color: shadowPurple),),
-                      
-                // ),
               ]),
               Expanded(
                   child: Row(
@@ -142,7 +147,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
-                    onPressed: () {
+                    onPressed: () {                                            
                       var winStatus = ref.read(gameStateController.notifier).hintButton();
                       if (winStatus != null) {
                                 showDialog(
