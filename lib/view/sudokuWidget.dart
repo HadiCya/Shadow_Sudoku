@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +9,10 @@ import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
+import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import 'package:shadow_sudoku/view/sudokuWidget.dart';
+
+import 'sudokuWidget.dart';
 
 import '../main.dart';
 import '../model/dialogWidgets.dart';
@@ -14,6 +21,7 @@ import '../model/gridGenerator.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
 
+
 class SudokuWidget extends ConsumerStatefulWidget {
   const SudokuWidget({super.key});
 
@@ -21,16 +29,80 @@ class SudokuWidget extends ConsumerStatefulWidget {
   _SudokuWidgetState createState() => _SudokuWidgetState();
 }
 
-class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
+class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBindingObserver {
+
+  Duration duration = Duration();
+  Timer? timer;
+  bool justOpended = true;
+  bool active = true;
+  int timeHeight = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+
+    if(state == AppLifecycleState.paused){
+      active = false;
+    }
+    else if(state == AppLifecycleState.resumed){
+      active = true;
+    }
+  }
+
+  void addTime(){
+    final addSeconds = 1;
+
+    if(active)
+    {
+      setState((){
+      final seconds = duration.inSeconds + addSeconds;
+
+      duration = Duration(seconds: seconds);
+    });
+    }
+  }
+
+  void startTimer(){
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
   @override
   Widget build(BuildContext context) {
+
     final gameState = ref.watch(gameStateController);
+
+    twoDigits(int n) => n.toString().padLeft(2, '0');    
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    if(justOpended)
+    {
+      duration = Duration(seconds: gameState.time);
+      justOpended = false;
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (
+          onTap: () => (          
+            ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FrontPageHome())),
           ),
@@ -78,6 +150,15 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Text(
                       "Hints: ${gameState.currHints}/${gameState.maxHints}"),
                 ),
+                Center(
+                  // left: 175,
+                  // top: (MediaQuery.of(context).size.height / 12),
+                   heightFactor: MediaQuery.of(context).size.height > 700 ? 10: 7.5,
+                  // heightFactor: 10,
+                  child: Text(
+                      "Time: ${minutes}:${seconds}",
+                      style: TextStyle(color: shadowPurple),),               
+                ),
               ]),
               Expanded(
                   child: Row(
@@ -93,8 +174,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
-                    onPressed: () {
+                    onPressed: () {                                            
                       var winStatus = ref.read(gameStateController.notifier).hintButton();
+                      ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
+                      if(winStatus)
+                        setState(() => timer?.cancel());
                       if (winStatus != null) {
                                 showDialog(
                                   barrierDismissible: false,
@@ -128,6 +212,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                           ),
                           onPressed: () {
                             var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
+                            ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
+                            setState(() => timer?.cancel());
                             if (winStatus != null) {
                                 showDialog(
                                   barrierDismissible: false,
