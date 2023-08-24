@@ -29,27 +29,52 @@ class SudokuWidget extends ConsumerStatefulWidget {
   _SudokuWidgetState createState() => _SudokuWidgetState();
 }
 
-class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
+class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBindingObserver {
 
   Duration duration = Duration();
   Timer? timer;
   bool justOpended = true;
+  bool active = true;
+  int timeHeight = 0;
 
   @override
   void initState(){
     super.initState();
-
+    WidgetsBinding.instance.addObserver(this);
     startTimer();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+
+    if(state == AppLifecycleState.paused){
+      active = false;
+    }
+    else if(state == AppLifecycleState.resumed){
+      active = true;
+    }
   }
 
   void addTime(){
     final addSeconds = 1;
 
-    setState((){
+    if(active)
+    {
+      setState((){
       final seconds = duration.inSeconds + addSeconds;
 
       duration = Duration(seconds: seconds);
     });
+    }
   }
 
   void startTimer(){
@@ -125,12 +150,14 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> {
                   child: Text(
                       "Hints: ${gameState.currHints}/${gameState.maxHints}"),
                 ),
-                Positioned(
-                  left: 175,
-                  top: (MediaQuery.of(context).size.height / 12),
+                Center(
+                  // left: 175,
+                  // top: (MediaQuery.of(context).size.height / 12),
+                   heightFactor: MediaQuery.of(context).size.height > 700 ? 10: 7.5,
+                  // heightFactor: 10,
                   child: Text(
                       "Time: ${minutes}:${seconds}",
-                      style: TextStyle(color: shadowPurple),),                    
+                      style: TextStyle(color: shadowPurple),),               
                 ),
               ]),
               Expanded(
