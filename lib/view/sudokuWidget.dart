@@ -156,7 +156,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                    heightFactor: MediaQuery.of(context).size.height > 700 ? 10: 7.5,
                   // heightFactor: 10,
                   child: Text(
-                      "Time: ${minutes}:${seconds}",
+                      "${minutes}:${seconds}",
                       style: TextStyle(color: shadowPurple),),               
                 ),
               ]),
