@@ -213,7 +213,6 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                           onPressed: () {
                             var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
                             ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
-                            setState(() => timer?.cancel());
                             if (winStatus != null) {
                                 showDialog(
                                   barrierDismissible: false,
