@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  audioplayers: ^0.20.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -70,6 +71,7 @@ flutter:
   assets:
     - assets/images/SudokuBackground.png
     - assets/images/Shadow Sudoku Front Page(vector).png
+    - assets/images/Shadow Sudoku Song.mp3
 
   fonts:
     - family: sficonsets

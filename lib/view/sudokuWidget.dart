@@ -11,6 +11,7 @@ import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import "package:audioplayers/audioplayers.dart";
 
 import 'sudokuWidget.dart';
 
@@ -36,6 +37,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
   bool justOpended = true;
   bool active = true;
   int timeHeight = 0;
+  
 
   @override
   void initState(){
@@ -83,6 +85,9 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
 
   @override
   Widget build(BuildContext context) {
+
+    final player = AudioCache();
+    player.play('Shadow Sudoku Song.mp3');
 
     final gameState = ref.watch(gameStateController);
 
