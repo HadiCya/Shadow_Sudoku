@@ -5,36 +5,42 @@ import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
-// import 'lib/model/frontPageWidgets.dart';
-// import 'model/gridGenerator.dart';
-
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
+  
+  @override
+  State<Settings> createState() => _Settings();
+}
+
+class _Settings extends State<Settings> {
 
   static bool musicToggle = true;
-  static final player = AudioCache();
+  static final player = AudioPlayer();
+  
+  @override
+  Settings createState() => Settings();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontPageHome())),
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: shadowPurple,
-        ),
-        backgroundColor: const Color.fromARGB(255, 73, 68, 68),
-        elevation: 0,
-        title: const Stack(
-          children: [
-            Align(child: Text("Shadow Sudoku"), alignment: Alignment.center),
-          ],
-        ),
-      ),
+      // appBar: AppBar(
+      //   leading: GestureDetector(
+      //     child: const Icon(Icons.arrow_back_ios_new),
+      //     onTap: () => (
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontPageHome())),
+      //     ),
+      //   ),
+      //   iconTheme: const IconThemeData(
+      //     color: shadowPurple,
+      //   ),
+      //   backgroundColor: const Color.fromARGB(255, 73, 68, 68),
+      //   elevation: 0,
+      //   title: const Stack(
+      //     children: [
+      //       Align(child: Text("Shadow Sudoku"), alignment: Alignment.center),
+      //     ],
+      //   ),
+      // ),
       body: Container(
         child: Stack(
           children: [
@@ -48,28 +54,42 @@ class Settings extends StatelessWidget {
             Center(
               child: Column(
                 children: [
+                  SizedBox(height: 50,),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          child: const Icon(Icons.arrow_back_ios_new, color: shadowPurple,),
+                          onTap: () => (
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontPageHome())),
+                          ),
+                      ),
+                  SizedBox(width: 125),
+                  Text("Settings", style: TextStyle(fontSize: 30),),
+                ],
+                ),
                   SizedBox(height: 200,),
                   Row(
                     children: [
-                      SizedBox(width: 50,),
+                      SizedBox(width: 100,),
                       Text("Music: ", style: TextStyle(fontSize: 40),),
                       Switch(
                         value: musicToggle, 
+                        activeColor: shadowPurple,
                         onChanged: (bool value){
-                          
+                          double newVolume;
+                          if(value){
+                            newVolume = 100;
+                          }
+                          else{
+                            newVolume = 0;
+                          }
+                          player.setVolume(newVolume);
+
+                          setState((){
+                            musicToggle = value;
+                          });
                         }
                         )
-                      // Slider(
-                      //   value: currentVol, 
-                      //   activeColor: shadowPurple,
-                      //   onChanged: (Volume){
-                      //     // currentVol = Volume;
-                      //     PerfectVolumeControl.setVolume(Volume);
-                      //   },
-                      //   min: 0,
-                      //   max: 1,
-                      //   divisions: 100,
-                      //   )
                     ],
                   ),
                 ],
