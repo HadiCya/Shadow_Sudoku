@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
@@ -11,11 +12,7 @@ class Settings extends StatelessWidget {
   const Settings({super.key});
 
   static bool musicToggle = true;
-
-  @override
-  initState(){
-    PerfectVolumeControl.hideUI = false;
-  }
+  static final player = AudioCache();
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +56,7 @@ class Settings extends StatelessWidget {
                       Switch(
                         value: musicToggle, 
                         onChanged: (bool value){
-                          // setState((){
-                            musicToggle = value;
-                          // });
+                          
                         }
                         )
                       // Slider(
