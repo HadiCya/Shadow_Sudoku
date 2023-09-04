@@ -11,6 +11,7 @@ import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import "package:flutter/services.dart";
 
 import 'sudokuWidget.dart';
 
@@ -101,7 +102,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
       appBar: AppBar(
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (          
+          onTap: () => (  
+            HapticFeedback.mediumImpact(),        
             ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FrontPageHome())),
@@ -167,14 +169,21 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                       buttonText: "Erase",
                       icon: CupertinoIcons.xmark,
                       onPressed: () {
+                        HapticFeedback.mediumImpact();
                         ref.read(gameStateController.notifier).eraseButton();
                       }),
-                  const ActionButton(
-                      buttonText: "Notes", icon: CupertinoIcons.pencil),
+                  ActionButton(
+                      buttonText: "Notes", 
+                      icon: CupertinoIcons.pencil, 
+                      onPressed: () {
+                        HapticFeedback.mediumImpact();
+                        },
+                      ),
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
-                    onPressed: () {                                            
+                    onPressed: () {   
+                      HapticFeedback.mediumImpact();                                         
                       var winStatus = ref.read(gameStateController.notifier).hintButton();
                       ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
                       if(winStatus)
@@ -213,6 +222,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                           onPressed: () {
                             var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
                             ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
+                            HapticFeedback.mediumImpact();
                             if (winStatus != null) {
                                 showDialog(
                                   barrierDismissible: false,
