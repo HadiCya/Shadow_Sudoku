@@ -1,6 +1,7 @@
 class SudokuNumber {
   int num;
-  bool isSystemGenerated, isCorrect;
+  List<bool> notes;
+  bool isSystemGenerated, isCorrect, isNote;
 
-  SudokuNumber({this.num = 0, this.isSystemGenerated = false, this.isCorrect = true});
+  SudokuNumber({this.num = 0, List<bool>? notes, this.isSystemGenerated = false, this.isCorrect = true, this.isNote = false}) : notes = notes ?? List.generate(9, (_) => false);
 }

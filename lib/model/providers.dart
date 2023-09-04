@@ -18,7 +18,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
             currHints: 0,
             maxHints: 3,
             time: 0,
-            numberCount: numberCount));
+            numberCount: numberCount,
+            isNoteMode: false));
 
   highlightNumbers(box, pos) {
     state = state.copyWith(i: box, j: pos, num: state.grid[box][pos]);
@@ -26,31 +27,38 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
   updatePosition(int input) {
     SudokuNumber temp = SudokuNumber();
-    temp.num = input;
-    temp.isCorrect = state.checkCorrect(input);
     List<List<SudokuNumber>> grid = [
       for (var sublist in state.grid) [...sublist]
     ];
     List<int> numCountTemp =
         List.generate(9, (index) => state.numberCount[index]);
     if (grid[state.i][state.j].num == 0) {
-      grid[state.i][state.j] = temp;
-      if (temp.isCorrect) {
-        numCountTemp[input - 1]++;
+      if (!state.isNoteMode) {
+        temp.num = input;
+        temp.isCorrect = state.checkCorrect(input);
+        grid[state.i][state.j] = temp;
+        if (temp.isCorrect) {
+          numCountTemp[input - 1]++;
+        }
+        state = state.copyWith(
+            grid: grid,
+            currMistakes:
+                (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
+            numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
+        return state.checkWinStatus();
+      } else {
+        temp.notes = grid[state.i][state.j].notes;
+        temp.notes[input-1] = !temp.notes[input-1];
+        temp.isNote = temp.notes.isNotEmpty;
+        grid[state.i][state.j] = temp;
+        state = state.copyWith(grid: grid);
       }
-      state = state.copyWith(
-          grid: grid,
-          currMistakes:
-              (temp.isCorrect ? state.currMistakes : state.currMistakes + 1),
-          numberCount: temp.isCorrect ? numCountTemp : state.numberCount);
-      return state.checkWinStatus();
     }
   }
 
-  hintButton(){
-    if(state.currHints == 3)
-    {
-      return;  
+  hintButton() {
+    if (state.currHints == 3) {
+      return;
     }
 
     List<List<SudokuNumber>> grid = [
@@ -62,44 +70,41 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
     int row = 0;
     int col = 0;
-   
-    for(int i = 0; i < index.length; i++)
-    {
+
+    for (int i = 0; i < index.length; i++) {
       row = (index[i] / 9).floor();
       col = index[i] % 9;
 
-      if(grid[row][col].num == 0)
-      {
+      if (grid[row][col].num == 0) {
         break;
       }
     }
-    
-    if(grid[row][col].num != 0)
-    {
+
+    if (grid[row][col].num != 0) {
       row = 0;
       col = 0;
     }
 
     SudokuNumber temp = SudokuNumber();
     temp.num = solvedGrid[row][col];
-    temp.isSystemGenerated = true;   
+    temp.isSystemGenerated = true;
 
     List<int> numCountTemp =
         List.generate(9, (index) => state.numberCount[index]);
     if (grid[row][col].num == 0) {
       grid[row][col] = temp;
-        numCountTemp[temp.num - 1]++;
+      numCountTemp[temp.num - 1]++;
     }
-    
+
     state = state.copyWith(
-          grid: grid,
-          currHints: state.currHints + 1,
-          numberCount: numCountTemp,
-    ); 
+      grid: grid,
+      currHints: state.currHints + 1,
+      numberCount: numCountTemp,
+    );
 
     return state.checkWinStatus();
   }
-    
+
   eraseButton() {
     SudokuNumber temp = SudokuNumber();
     List<List<SudokuNumber>> grid = [
@@ -115,10 +120,17 @@ class GameStateNotifier extends StateNotifier<GameState> {
       grid[state.i][state.j] = temp;
       state = state.copyWith(grid: grid, numberCount: numCountTemp);
     }
+    if (grid[state.i][state.j].isNote) {
+      grid[state.i][state.j] = temp;
+      state = state.copyWith(grid: grid, numberCount: numCountTemp);
+    }
   }
 
-  updateTime(int time)
-  {
+  updateTime(int time) {
     state = state.copyWith(time: time);
+  }
+
+  noteMode() {
+    state = state.copyWith(isNoteMode: !state.isNoteMode);
   }
 }
