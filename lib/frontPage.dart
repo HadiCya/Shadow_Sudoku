@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 import 'model/frontPageWidgets.dart';
@@ -84,7 +85,14 @@ class FrontPageHome extends StatelessWidget {
 
                   const SizedBox(height: 25),
                                   
-                    const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                    
+
+                    GestureDetector(
+                      child: const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                      onTap: () => (
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings()))
+                      ),
+                    )
                     
                   
                 ],
