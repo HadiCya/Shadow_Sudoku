@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import "package:flutter/services.dart";
 
 import 'model/frontPageWidgets.dart';
 import 'model/gridGenerator.dart';
@@ -39,6 +40,7 @@ class FrontPageHome extends StatelessWidget {
                       buttonColor: Color.fromARGB(255, 164, 75, 170),
                       ),
                       onTap: () => (
+                        HapticFeedback.mediumImpact(),
                         showModalBottomSheet(
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -79,22 +81,20 @@ class FrontPageHome extends StatelessWidget {
                   GestureDetector(
                     child: const FrontPageButton(buttonText: "Continue", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     onTap: () => (
+                      HapticFeedback.mediumImpact(),
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const SudokuWidget()))
                     ),
                   ),
 
                   const SizedBox(height: 25),
                                   
-                    
+                  GestureDetector(
+                    child: const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
+                    onTap: () => (
+                      HapticFeedback.mediumImpact(),
 
-                    GestureDetector(
-                      child: const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
-                      onTap: () => (
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings()))
-                      ),
-                    )
-                    
-                  
+                    ),
+                  ),  
                 ],
               ),
             )
