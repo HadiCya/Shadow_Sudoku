@@ -23,24 +23,6 @@ class _Settings extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: GestureDetector(
-      //     child: const Icon(Icons.arrow_back_ios_new),
-      //     onTap: () => (
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontPageHome())),
-      //     ),
-      //   ),
-      //   iconTheme: const IconThemeData(
-      //     color: shadowPurple,
-      //   ),
-      //   backgroundColor: const Color.fromARGB(255, 73, 68, 68),
-      //   elevation: 0,
-      //   title: const Stack(
-      //     children: [
-      //       Align(child: Text("Shadow Sudoku"), alignment: Alignment.center),
-      //     ],
-      //   ),
-      // ),
       body: Container(
         child: Stack(
           children: [
