@@ -14,9 +14,6 @@ class _Settings extends State<Settings> {
   static bool musicToggle = true;
 
   @override
-  Settings createState() => const Settings();
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
