@@ -31,10 +31,10 @@ class _Settings extends State<Settings> {
           alignment: Alignment.center,
           children: [
             Positioned(
-                right: MediaQuery.of(context).size.width / 3,
+                right: MediaQuery.of(context).size.width / 2.7,
                 child: const Text(
                   "Settings",
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 20),
                 )),
             const Align(
               child: Text(""),
@@ -58,7 +58,7 @@ class _Settings extends State<Settings> {
           Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 8,
+                height: MediaQuery.of(context).size.height / 6,
               ),
               Row(
                 children: [
@@ -72,7 +72,7 @@ class _Settings extends State<Settings> {
                         style: TextStyle(fontSize: 40),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width / 1.05,
+                        height: MediaQuery.of(context).size.width,
                       ),
                       const Align(
                           alignment: Alignment.bottomLeft,
@@ -86,7 +86,7 @@ Music:''',
                     ],
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 8,
+                    width: MediaQuery.of(context).size.width / 6,
                   ),
                   Column(children: [
                     Switch(
@@ -106,7 +106,7 @@ Music:''',
                           });
                         }),
                     SizedBox(
-                      height: MediaQuery.of(context).size.width / 1.05,
+                      height: MediaQuery.of(context).size.width,
                     ),
                     const Align(
                         alignment: Alignment.bottomLeft,
