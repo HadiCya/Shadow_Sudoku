@@ -8,6 +8,7 @@ import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
+import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
@@ -117,11 +118,17 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Stack(
+        title: Stack(
           children: [
             Align(child: Text("Shadow Sudoku")),
             Positioned(
-                right: 0, child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
+                right: 0, child: GestureDetector(
+                  child: const Icon(SFSymbols.gear_alt, color: shadowPurple),
+                  onTap: () => (
+                  ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings())),
+                  )),),
+                
           ],
         ),
       ),

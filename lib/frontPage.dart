@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import "package:flutter/services.dart";
 
@@ -89,17 +90,13 @@ class FrontPageHome extends StatelessWidget {
 
                   const SizedBox(height: 25),
                                   
-                  
-
                   GestureDetector(
                     child: const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     onTap: () => (
                       HapticFeedback.mediumImpact(),
 
                     ),
-                  ),
-                    
-                  
+                  ),  
                 ],
               ),
             )
