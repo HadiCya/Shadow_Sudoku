@@ -5,11 +5,14 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - perfect_volume_control (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - Flutter (from `Flutter`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - perfect_volume_control (from `.symlinks/plugins/perfect_volume_control/ios`)
 
 EXTERNAL SOURCES:
   audioplayers_darwin:
@@ -18,11 +21,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  perfect_volume_control:
+    :path: ".symlinks/plugins/perfect_volume_control/ios"
 
 SPEC CHECKSUMS:
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  perfect_volume_control: 79b165ecd79d6ee20e60bf15534de61ebf3bb5f3
 
 PODFILE CHECKSUM: aa3b1d9cb94e8055dc6468141196cf9e4c8e33df
 

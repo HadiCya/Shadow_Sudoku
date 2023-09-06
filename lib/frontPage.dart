@@ -94,7 +94,7 @@ class FrontPageHome extends StatelessWidget {
                     child: const FrontPageButton(buttonText: "Settings", buttonColor: Color.fromARGB(255, 69, 66, 66)),
                     onTap: () => (
                       HapticFeedback.mediumImpact(),
-
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings()))
                     ),
                   ),  
                 ],

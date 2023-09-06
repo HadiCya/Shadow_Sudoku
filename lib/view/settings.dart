@@ -5,6 +5,8 @@ import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
+import '../model/musicPlayer.dart';
+
 class Settings extends StatefulWidget {
   const Settings({super.key});
   
@@ -15,7 +17,6 @@ class Settings extends StatefulWidget {
 class _Settings extends State<Settings> {
 
   static bool musicToggle = true;
-  static final player = AudioPlayer();
   
   @override
   Settings createState() => Settings();
@@ -60,7 +61,7 @@ class _Settings extends State<Settings> {
                         onChanged: (bool value){
                           double newVolume;
                           if(value){
-                            newVolume = 100;
+                            newVolume = 1.0;
                           }
                           else{
                             newVolume = 0;
