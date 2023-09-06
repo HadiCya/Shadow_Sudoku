@@ -167,7 +167,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget>
                   // left: 175,
                   // top: (MediaQuery.of(context).size.height / 12),
                   heightFactor:
-                      MediaQuery.of(context).size.height > 700 ? 10 : 7.5,
+                      7.5,
                   // heightFactor: 10,
                   child: Text(
                     "$minutes:$seconds",
