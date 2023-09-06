@@ -11,8 +11,10 @@ import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import "package:audioplayers/audioplayers.dart";
 import "package:flutter/services.dart";
 
+import '../model/musicPlayer.dart';
 import 'sudokuWidget.dart';
 
 import '../main.dart';
@@ -37,6 +39,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
   bool justOpended = true;
   bool active = true;
   int timeHeight = 0;
+  
 
   @override
   void initState(){
@@ -80,11 +83,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
 
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+    playMusic();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final gameState = ref.watch(gameStateController);
 
     twoDigits(int n) => n.toString().padLeft(2, '0');    

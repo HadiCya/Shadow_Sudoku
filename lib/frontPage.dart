@@ -4,12 +4,14 @@ import "package:flutter/services.dart";
 
 import 'model/frontPageWidgets.dart';
 import 'model/gridGenerator.dart';
+import 'model/musicPlayer.dart';
 
 class FrontPageHome extends StatelessWidget {
   const FrontPageHome({super.key});
 
   @override
   Widget build(BuildContext context) {
+    stopMusic();
     return Scaffold(
       body: Container(
         child: Stack(
