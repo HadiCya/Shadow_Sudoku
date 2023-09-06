@@ -18,12 +18,8 @@ void main() {
 class ShadowSudoku extends StatelessWidget {
   const ShadowSudoku({super.key});
 
-  
-
   @override
   Widget build(BuildContext context) {
-
-    playMusic();
     return MaterialApp(
       routes: {
         '/sudokuWidget': (context) => const SudokuWidget(),

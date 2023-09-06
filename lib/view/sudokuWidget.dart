@@ -82,6 +82,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
 
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+    playMusic();
   }
 
   @override
