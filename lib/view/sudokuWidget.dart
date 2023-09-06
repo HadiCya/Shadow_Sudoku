@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,21 +9,13 @@ import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
 import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
-import 'package:shadow_sudoku/view/sudokuWidget.dart';
-import 'package:shadow_sudoku/view/sudokuWidget.dart';
-import "package:audioplayers/audioplayers.dart";
 import "package:flutter/services.dart";
 
 import '../model/musicPlayer.dart';
-import 'sudokuWidget.dart';
 
-import '../main.dart';
 import '../model/dialogWidgets.dart';
-import '../model/gameState.dart';
-import '../model/gridGenerator.dart';
 
 const Color shadowPurple = Color.fromRGBO(115, 79, 155, 1);
-
 
 class SudokuWidget extends ConsumerStatefulWidget {
   const SudokuWidget({super.key});
@@ -33,17 +24,16 @@ class SudokuWidget extends ConsumerStatefulWidget {
   _SudokuWidgetState createState() => _SudokuWidgetState();
 }
 
-class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBindingObserver {
-
-  Duration duration = Duration();
+class _SudokuWidgetState extends ConsumerState<SudokuWidget>
+    with WidgetsBindingObserver {
+  Duration duration = const Duration();
   Timer? timer;
   bool justOpended = true;
   bool active = true;
   int timeHeight = 0;
-  
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     startTimer();
@@ -61,29 +51,27 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
     // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
 
-    if(state == AppLifecycleState.paused){
+    if (state == AppLifecycleState.paused) {
       active = false;
-    }
-    else if(state == AppLifecycleState.resumed){
+    } else if (state == AppLifecycleState.resumed) {
       active = true;
     }
   }
 
-  void addTime(){
-    final addSeconds = 1;
+  void addTime() {
+    const addSeconds = 1;
 
-    if(active)
-    {
-      setState((){
-      final seconds = duration.inSeconds + addSeconds;
+    if (active) {
+      setState(() {
+        final seconds = duration.inSeconds + addSeconds;
 
-      duration = Duration(seconds: seconds);
-    });
+        duration = Duration(seconds: seconds);
+      });
     }
   }
 
-  void startTimer(){
-    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     playMusic();
   }
 
@@ -91,12 +79,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
   Widget build(BuildContext context) {
     final gameState = ref.watch(gameStateController);
 
-    twoDigits(int n) => n.toString().padLeft(2, '0');    
+    twoDigits(int n) => n.toString().padLeft(2, '0');
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
 
-    if(justOpended)
-    {
+    if (justOpended) {
       duration = Duration(seconds: gameState.time);
       justOpended = false;
     }
@@ -106,9 +93,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
       appBar: AppBar(
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (  
-            HapticFeedback.mediumImpact(),        
-            ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
+          onTap: () => (
+            HapticFeedback.mediumImpact(),
+            ref
+                .read(gameStateController.notifier)
+                .updateTime(duration.inSeconds),
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FrontPageHome())),
           ),
@@ -119,16 +108,28 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Stack(
+          alignment: Alignment.center,
           children: [
-            Align(child: Text("Shadow Sudoku")),
             Positioned(
-                right: 0, child: GestureDetector(
+                right: MediaQuery.of(context).size.width / 4,
+                child: const Text("Shadow Sudoku")),
+            const Align(
+              child: Text(""),
+            ),
+            Positioned(
+              right: 0,
+              child: GestureDetector(
                   child: const Icon(SFSymbols.gear_alt, color: shadowPurple),
                   onTap: () => (
-                  ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings())),
-                  )),),
-                
+                        ref
+                            .read(gameStateController.notifier)
+                            .updateTime(duration.inSeconds),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Settings())),
+                      )),
+            ),
           ],
         ),
       ),
@@ -165,11 +166,13 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                 Center(
                   // left: 175,
                   // top: (MediaQuery.of(context).size.height / 12),
-                   heightFactor: MediaQuery.of(context).size.height > 700 ? 10: 7.5,
+                  heightFactor:
+                      MediaQuery.of(context).size.height > 700 ? 10 : 7.5,
                   // heightFactor: 10,
                   child: Text(
-                      "${minutes}:${seconds}",
-                      style: TextStyle(color: shadowPurple),),               
+                    "$minutes:$seconds",
+                    style: const TextStyle(color: shadowPurple),
+                  ),
                 ),
               ]),
               Expanded(
@@ -183,7 +186,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                         ref.read(gameStateController.notifier).eraseButton();
                       }),
                   ActionButton(
-                      buttonText: "Notes", 
+                      buttonText: "Notes",
                       icon: CupertinoIcons.pencil,
                       onPressed: () {
                         HapticFeedback.mediumImpact();
@@ -192,20 +195,20 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
-                    onPressed: () {   
-                      HapticFeedback.mediumImpact();                                         
-                      var winStatus = ref.read(gameStateController.notifier).hintButton();
-                      ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
-                      if(winStatus)
-                        setState(() => timer?.cancel());
+                    onPressed: () {
+                      HapticFeedback.mediumImpact();
+                      var winStatus =
+                          ref.read(gameStateController.notifier).hintButton();
+                      ref
+                          .read(gameStateController.notifier)
+                          .updateTime(duration.inSeconds);
+                      if (winStatus) setState(() => timer?.cancel());
                       if (winStatus != null) {
-                                showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) => 
-                                       winLoseDialog(winStatus)
-                                );
-                            }
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => winLoseDialog(winStatus));
+                      }
                     },
                   ),
                 ],
@@ -230,21 +233,26 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                             splashFactory: NoSplash.splashFactory,
                           ),
                           onPressed: () {
-                            var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
-                            ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
+                            var winStatus = ref
+                                .read(gameStateController.notifier)
+                                .updatePosition(i);
+                            ref
+                                .read(gameStateController.notifier)
+                                .updateTime(duration.inSeconds);
                             HapticFeedback.mediumImpact();
                             if (winStatus != null) {
-                                showDialog(
+                              showDialog(
                                   barrierDismissible: false,
                                   context: context,
-                                  builder: (context) => 
-                                       winLoseDialog(winStatus)
-                                );
+                                  builder: (context) =>
+                                      winLoseDialog(winStatus));
                             }
                           },
                           child: Text("$i",
                               style: TextStyle(
-                                color: gameState.isNoteMode ? Colors.amber : shadowPurple,
+                                color: gameState.isNoteMode
+                                    ? Colors.amber
+                                    : shadowPurple,
                                 fontSize: 46,
                                 fontWeight: FontWeight.w500,
                               )),

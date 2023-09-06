@@ -71,9 +71,8 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/images/SudokuBackground.png
-    - assets/images/Shadow Sudoku Front Page(vector).png
-    - assets/music/ShadowSudokuSong.mp3
+    - assets/images/
+    - assets/music/
 
   fonts:
     - family: sficonsets

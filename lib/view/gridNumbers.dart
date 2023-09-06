@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/providers.dart';
-import 'package:shadow_sudoku/view/notesSquare.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
 class GridNumbers extends ConsumerStatefulWidget {

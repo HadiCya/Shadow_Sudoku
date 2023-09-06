@@ -20,7 +20,7 @@ gridGenerator(difficultyOptions difficulty) async {
         List.generate(9, (i) => List.generate(9, (j) => 0));
     printGrid(solvedBoard);
     for (int r = 0; r < 9; r++) {
-      for (Cell c in solvedBoard!.getRow(r)) {
+      for (Cell c in solvedBoard.getRow(r)) {
         int y = c.getPosition()!.grid!.y.toInt();
         int box = ((y ~/ 3)) + ((r ~/ 3) * 3); //3
         int pos = (y % 3) + ((r % 3) * 3);

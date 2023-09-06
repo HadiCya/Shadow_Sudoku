@@ -1,86 +1,132 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
-import 'package:perfect_volume_control/perfect_volume_control.dart';
-import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 import '../model/musicPlayer.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
-  
+
   @override
   State<Settings> createState() => _Settings();
 }
 
 class _Settings extends State<Settings> {
-
   static bool musicToggle = true;
-  
+
   @override
-  Settings createState() => Settings();
+  Settings createState() => const Settings();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context, true),
+          child: const Icon(Icons.arrow_back_ios_new),
+        ),
+        iconTheme: const IconThemeData(
+          color: shadowPurple,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Stack(
+          alignment: Alignment.center,
           children: [
-            Positioned.fill(
-              child: Image.asset(
-                "assets/images/Shadow Sudoku Front Page(vector).png",
-                fit: BoxFit.cover,
-              ),
+            Positioned(
+                right: MediaQuery.of(context).size.width / 3,
+                child: const Text(
+                  "Settings",
+                  style: TextStyle(fontSize: 24),
+                )),
+            const Align(
+              child: Text(""),
             ),
-
-            Center(
-              child: Column(
+            const Positioned(
+              right: 0,
+              child: Text("")
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+          child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/Dragon_Background.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 8,
+              ),
+              Row(
                 children: [
-                  SizedBox(height: 50,),
-                  Row(
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 8,
+                  ),
+                  Column(
                     children: [
-                      GestureDetector(
-                          child: const Icon(Icons.arrow_back_ios_new, color: shadowPurple,),
-                          onTap: () => (
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontPageHome())),
-                          ),
+                      const Text(
+                        "Music: ",
+                        style: TextStyle(fontSize: 40),
                       ),
-                  SizedBox(width: 125),
-                  Text("Settings", style: TextStyle(fontSize: 30),),
-                ],
-                ),
-                  SizedBox(height: 200,),
-                  Row(
-                    children: [
-                      SizedBox(width: 100,),
-                      Text("Music: ", style: TextStyle(fontSize: 40),),
-                      Switch(
-                        value: musicToggle, 
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width / 1.05,
+                      ),
+                      const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            '''
+Lead Programmer:
+Game Programmer:
+Designer:
+Music:''',
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 8,
+                  ),
+                  Column(children: [
+                    Switch(
+                        value: musicToggle,
                         activeColor: shadowPurple,
-                        onChanged: (bool value){
+                        onChanged: (bool value) {
                           double newVolume;
-                          if(value){
+                          if (value) {
                             newVolume = 1.0;
-                          }
-                          else{
+                          } else {
                             newVolume = 0;
                           }
                           player.setVolume(newVolume);
 
-                          setState((){
+                          setState(() {
                             musicToggle = value;
                           });
-                        }
-                        )
-                    ],
-                  ),
+                        }),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width / 1.05,
+                    ),
+                    const Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          '''
+Hadi Chaaban
+Ahmad Majed
+Haris Khan
+Zaki Ahmad''',
+                        )),
+                  ])
                 ],
               ),
-            )
-          ],
-        )
-      ),
+            ],
+          ),
+        ],
+      )),
     );
   }
 }

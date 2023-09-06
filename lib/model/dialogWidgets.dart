@@ -8,7 +8,6 @@ import '../main.dart';
 import '../view/sudokuWidget.dart';
 import 'gameState.dart';
 import 'gridGenerator.dart';
-import 'providers.dart';
 
 
 class dialogText extends ConsumerWidget {
@@ -16,7 +15,7 @@ class dialogText extends ConsumerWidget {
   // final String textAttribute;
   final GameStats gameStats;
 
-  dialogText(this.gameStats);
+  const dialogText(this.gameStats, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +30,7 @@ class dialogText extends ConsumerWidget {
       alignment: const Alignment(-0.5, 0.5),
       child: Text(
         gameStats != GameStats.time ? gameStats.text + statsList[gameStats.stats].toString() : 
-        "Time: " + minutes.toString() + ":" + seconds.toString(),
+        "Time: $minutes:$seconds",
         textAlign: TextAlign.start,
         style: const TextStyle(
         color: Colors.white, 
@@ -47,9 +46,10 @@ class winLoseDialog extends ConsumerWidget{
 
   final bool winStatus;
 
-  winLoseDialog(this.winStatus);
+  const winLoseDialog(this.winStatus, {super.key});
 
- Widget build(BuildContext context, WidgetRef ref){
+ @override
+  Widget build(BuildContext context, WidgetRef ref){
   return SimpleDialog(
     backgroundColor: Colors.transparent,
     contentPadding: EdgeInsets.zero,
@@ -88,19 +88,19 @@ class winLoseDialog extends ConsumerWidget{
               const SizedBox(
                 height: 10,
               ),
-              dialogText(
+              const dialogText(
                   GameStats.time),
               const SizedBox(
                 height: 10,
               ),
-              dialogText(
+              const dialogText(
                   GameStats.hints),
               const SizedBox(
                 height: 10,
               ),
               // dialogText(
               //     winStatus ? GameStats.mistakes: GameStats.none),
-              winStatus ? dialogText(GameStats.mistakes): Container(),
+              winStatus ? const dialogText(GameStats.mistakes): Container(),
             ],
           )),
       

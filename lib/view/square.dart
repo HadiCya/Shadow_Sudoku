@@ -12,7 +12,7 @@ class Square extends StatefulWidget {
 class _SquareState extends State<Square> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 35.0,
         height: 35.0,
         child: FittedBox(

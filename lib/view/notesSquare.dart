@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'gridNumbers.dart';
 
 class NotesSquare extends StatefulWidget {
   const NotesSquare({super.key, required this.notes});
@@ -39,6 +38,5 @@ class _NotesSquareState extends State<NotesSquare> {
                 )));
       },
     );
-    ;
   }
 }
