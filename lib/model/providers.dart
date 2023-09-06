@@ -2,6 +2,7 @@ import 'package:shadow_sudoku/main.dart';
 import 'package:shadow_sudoku/model/gameState.dart';
 import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:flutter/services.dart";
 
 var gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
     (ref) => GameStateNotifier());
@@ -53,7 +54,9 @@ class GameStateNotifier extends StateNotifier<GameState> {
         grid[state.i][state.j] = temp;
         state = state.copyWith(grid: grid);
       }
-    }
+    } else{
+        HapticFeedback.heavyImpact();
+      }
   }
 
   hintButton() {

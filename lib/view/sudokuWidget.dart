@@ -8,10 +8,14 @@ import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:shadow_sudoku/frontPage.dart';
 import 'package:shadow_sudoku/model/providers.dart';
 import 'package:shadow_sudoku/view/actionButtons.dart';
+import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
+import "package:audioplayers/audioplayers.dart";
+import "package:flutter/services.dart";
 
+import '../model/musicPlayer.dart';
 import 'sudokuWidget.dart';
 
 import '../main.dart';
@@ -36,6 +40,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
   bool justOpended = true;
   bool active = true;
   int timeHeight = 0;
+  
 
   @override
   void initState(){
@@ -79,11 +84,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
 
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+    playMusic();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final gameState = ref.watch(gameStateController);
 
     twoDigits(int n) => n.toString().padLeft(2, '0');    
@@ -101,7 +106,8 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
       appBar: AppBar(
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back_ios_new),
-          onTap: () => (          
+          onTap: () => (  
+            HapticFeedback.mediumImpact(),        
             ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FrontPageHome())),
@@ -112,11 +118,17 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Stack(
+        title: Stack(
           children: [
             Align(child: Text("Shadow Sudoku")),
             Positioned(
-                right: 0, child: Icon(SFSymbols.gear_alt, color: shadowPurple)),
+                right: 0, child: GestureDetector(
+                  child: const Icon(SFSymbols.gear_alt, color: shadowPurple),
+                  onTap: () => (
+                  ref.read(gameStateController.notifier).updateTime(duration.inSeconds),
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings())),
+                  )),),
+                
           ],
         ),
       ),
@@ -167,18 +179,21 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                       buttonText: "Erase",
                       icon: CupertinoIcons.xmark,
                       onPressed: () {
+                        HapticFeedback.mediumImpact();
                         ref.read(gameStateController.notifier).eraseButton();
                       }),
                   ActionButton(
                       buttonText: "Notes", 
                       icon: CupertinoIcons.pencil,
                       onPressed: () {
+                        HapticFeedback.mediumImpact();
                         ref.read(gameStateController.notifier).noteMode();
                       }),
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
-                    onPressed: () {                                            
+                    onPressed: () {   
+                      HapticFeedback.mediumImpact();                                         
                       var winStatus = ref.read(gameStateController.notifier).hintButton();
                       ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
                       if(winStatus)
@@ -217,6 +232,7 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                           onPressed: () {
                             var winStatus = ref.read(gameStateController.notifier).updatePosition(i);
                             ref.read(gameStateController.notifier).updateTime(duration.inSeconds);
+                            HapticFeedback.mediumImpact();
                             if (winStatus != null) {
                                 showDialog(
                                   barrierDismissible: false,

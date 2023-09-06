@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/providers.dart';
+import "package:flutter/services.dart";
 
 import '../main.dart';
 import '../view/sudokuWidget.dart';
@@ -48,6 +49,7 @@ class BottomSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: () async{
+        HapticFeedback.mediumImpact();
         var (ig, sg, nc) = await gridGenerator(difficulty);
         initialGrid = ig; solvedGrid = sg; numberCount = nc;
         gameStateController = StateNotifierProvider<GameStateNotifier, GameState>(
