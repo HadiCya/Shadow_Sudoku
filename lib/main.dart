@@ -5,6 +5,7 @@ import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
 
 var initialGrid, solvedGrid, numberCount;
+bool hasRan = false;
 
 void main() {
   runApp(const ProviderScope(

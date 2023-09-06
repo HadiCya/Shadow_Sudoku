@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/view/settings.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 import "package:flutter/services.dart";
 
+import 'main.dart';
 import 'model/frontPageWidgets.dart';
+import 'model/gameState.dart';
 import 'model/gridGenerator.dart';
 import 'model/musicPlayer.dart';
+import 'model/providers.dart';
 
 class FrontPageHome extends StatelessWidget {
   const FrontPageHome({super.key});
@@ -82,10 +86,16 @@ class FrontPageHome extends StatelessWidget {
 
                   GestureDetector(
                     child: const FrontPageButton(buttonText: "Continue", buttonColor: Color.fromARGB(255, 69, 66, 66)),
-                    onTap: () => (
-                      HapticFeedback.mediumImpact(),
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SudokuWidget()))
-                    ),
+                    onTap: () async {
+                      HapticFeedback.mediumImpact();
+                      if (!hasRan) {
+                        hasRan = true;
+                        var (ig, sg, nc) = await gridGenerator(difficultyOptions.easy);
+                        initialGrid = ig; solvedGrid = sg; numberCount = nc;
+                        gameStateController = StateNotifierProvider<GameStateNotifier, GameState>((ref) => GameStateNotifier());
+                      }
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SudokuWidget()));
+                    },
                   ),
 
                   const SizedBox(height: 25),
