@@ -4,24 +4,29 @@ import 'package:shadow_sudoku/model/sudokuNumber.dart';
 import 'package:shadow_sudoku/view/square.dart';
 import 'package:shadow_sudoku/view/sudokuWidget.dart';
 
+import '../view/notesSquare.dart';
+
 @immutable
 class GameState {
-  const GameState(
-      {required this.i,
-      required this.j,
-      required this.num,
-      required this.grid,
-      required this.currMistakes,
-      required this.maxMistakes,
-      required this.currHints,
-      required this.maxHints,
-      required this.time,
-      required this.numberCount});
+  const GameState({
+    required this.i,
+    required this.j,
+    required this.num,
+    required this.grid,
+    required this.currMistakes,
+    required this.maxMistakes,
+    required this.currHints,
+    required this.maxHints,
+    required this.time,
+    required this.numberCount,
+    required this.isNoteMode,
+  });
 
   final int i, j, currMistakes, maxMistakes, currHints, maxHints, time;
   final List<int> numberCount;
   final SudokuNumber num;
   final List<List<SudokuNumber>> grid;
+  final bool isNoteMode;
 
   GameState copyWith(
       {int? i,
@@ -33,7 +38,8 @@ class GameState {
       int? currHints,
       int? maxHints,
       int? time,
-      List<int>? numberCount}) {
+      List<int>? numberCount,
+      bool? isNoteMode}) {
     return GameState(
         i: i ?? this.i,
         j: j ?? this.j,
@@ -44,7 +50,8 @@ class GameState {
         currHints: currHints ?? this.currHints,
         maxHints: maxHints ?? this.maxHints,
         time: time ?? this.time,
-        numberCount: numberCount ?? this.numberCount);
+        numberCount: numberCount ?? this.numberCount,
+        isNoteMode: isNoteMode ?? this.isNoteMode);
   }
 
   getGridInfo(box, pos) {
@@ -90,21 +97,23 @@ class GameState {
     return Colors.transparent;
   }
 
-  Square displayNumber(box, pos) {
+  displayNumber(box, pos) {
+    SudokuNumber currentPos = grid[box][pos];
+    if (currentPos.num == 0 && currentPos.isNote) {
+      return NotesSquare(notes: currentPos.notes);
+    }
     String text = "";
     Color color = Colors.white;
-    SudokuNumber currentPos = grid[box][pos];
     if (currentPos.num != 0) {
       text = "${currentPos.num}";
-    }
-    if (currentPos.isSystemGenerated) {
-      color = Colors.white;
-    } else if (currentPos.isCorrect) {
-      color = const Color.fromRGBO(203, 195, 227, 1);
-    } else {
-      color = Colors.red;
-    }
-    Square result = Square(text: text, color: color);
-    return result;
+      if (currentPos.isSystemGenerated) {
+        color = Colors.white;
+      } else if (currentPos.isCorrect) {
+        color = const Color.fromRGBO(203, 195, 227, 1);
+      } else {
+        color = Colors.red;
+      }
+    } 
+    return Square(text: text, color: color);
   }
 }

@@ -184,11 +184,11 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                       }),
                   ActionButton(
                       buttonText: "Notes", 
-                      icon: CupertinoIcons.pencil, 
+                      icon: CupertinoIcons.pencil,
                       onPressed: () {
                         HapticFeedback.mediumImpact();
-                        },
-                      ),
+                        ref.read(gameStateController.notifier).noteMode();
+                      }),
                   ActionButton(
                     buttonText: "Hint",
                     icon: CupertinoIcons.lightbulb,
@@ -241,12 +241,10 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget> with WidgetsBinding
                                        winLoseDialog(winStatus)
                                 );
                             }
-
-                          
                           },
                           child: Text("$i",
-                              style: const TextStyle(
-                                color: shadowPurple,
+                              style: TextStyle(
+                                color: gameState.isNoteMode ? Colors.amber : shadowPurple,
                                 fontSize: 46,
                                 fontWeight: FontWeight.w500,
                               )),

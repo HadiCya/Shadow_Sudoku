@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadow_sudoku/model/providers.dart';
+import 'package:shadow_sudoku/view/notesSquare.dart';
 import 'package:shadow_sudoku/view/sudokuGrid.dart';
 
 class GridNumbers extends ConsumerStatefulWidget {
@@ -34,20 +35,20 @@ class _GridNumbersState extends ConsumerState<GridNumbers> {
                   width: borderMatrix[widget.j][3] * 1.0, color: Colors.black),
             )),
         alignment: Alignment.center,
-        child: FittedBox(
-            fit: BoxFit.fitHeight,
-            child: TextButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      return Colors.transparent;
+        child: TextButton(
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Colors.transparent;
+                        },
+                      ),
+                      splashFactory: NoSplash.splashFactory,
+                    ),
+                    onPressed: () {
+                      ref
+                          .read(gameStateController.notifier)
+                          .highlightNumbers(widget.i, widget.j);
                     },
-                  ),
-                  splashFactory: NoSplash.splashFactory,
-                ),
-                onPressed: () {
-                  ref.read(gameStateController.notifier).highlightNumbers(widget.i, widget.j);
-                },
-                child: gameState.displayNumber(widget.i, widget.j))));
+                    child: gameState.displayNumber(widget.i, widget.j)));
   }
 }

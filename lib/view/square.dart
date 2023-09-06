@@ -12,12 +12,17 @@ class Square extends StatefulWidget {
 class _SquareState extends State<Square> {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      widget.text,
-      style: TextStyle(
-        color: widget.color,
-        fontSize: 120,
-      ),
-    );
+    return Container(
+        width: 35.0,
+        height: 35.0,
+        child: FittedBox(
+            fit: BoxFit.none,
+            child: Text(
+              widget.text,
+              style: TextStyle(
+                color: widget.color,
+                fontSize: 35,
+              ),
+            )));
   }
 }
