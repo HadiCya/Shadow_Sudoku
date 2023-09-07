@@ -25,29 +25,29 @@ class _GridNumbersState extends ConsumerState<GridNumbers> {
             color: widget.isHighlighted,
             border: Border(
               top: BorderSide(
-                  width: borderMatrix[widget.j][0] * 1.0, color: Colors.black),
+                  width: 1.0, color: (borderMatrix[widget.j][0] == 1 ? Colors.black : Colors.transparent)),
               right: BorderSide(
-                  width: borderMatrix[widget.j][1] * 1.0, color: Colors.black),
+                  width: 1.0, color: (borderMatrix[widget.j][1] == 1 ? Colors.black : Colors.transparent)),
               bottom: BorderSide(
-                  width: borderMatrix[widget.j][2] * 1.0, color: Colors.black),
+                  width: 1.0, color: (borderMatrix[widget.j][2] == 1 ? Colors.black : Colors.transparent)),
               left: BorderSide(
-                  width: borderMatrix[widget.j][3] * 1.0, color: Colors.black),
+                  width: 1.0, color: (borderMatrix[widget.j][3] == 1 ? Colors.black : Colors.transparent)),
             )),
         alignment: Alignment.center,
         child: TextButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          return Colors.transparent;
-                        },
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    onPressed: () {
-                      ref
-                          .read(gameStateController.notifier)
-                          .highlightNumbers(widget.i, widget.j);
-                    },
-                    child: gameState.displayNumber(widget.i, widget.j)));
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  return Colors.transparent;
+                },
+              ),
+              splashFactory: NoSplash.splashFactory,
+            ),
+            onPressed: () {
+              ref
+                  .read(gameStateController.notifier)
+                  .highlightNumbers(widget.i, widget.j);
+            },
+            child: gameState.displayNumber(widget.i, widget.j)));
   }
 }

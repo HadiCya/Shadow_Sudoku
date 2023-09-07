@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class NotesSquare extends StatefulWidget {
   const NotesSquare({super.key, required this.notes});
   final List<bool> notes;
@@ -21,13 +20,9 @@ class _NotesSquareState extends State<NotesSquare> {
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
       ),
-      physics: const ScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.all(1),
-            width: 10.0,
-            height: 10.0,
-            child: FittedBox(
+        return FittedBox(
                 fit: BoxFit.none,
                 child: Text(
                   widget.notes[index] ? "${index+1}" : " ",
@@ -35,7 +30,7 @@ class _NotesSquareState extends State<NotesSquare> {
                     color: Colors.amber,
                     fontSize: 10,
                   ),
-                )));
+                ));
       },
     );
   }

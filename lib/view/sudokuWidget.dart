@@ -151,29 +151,27 @@ class _SudokuWidgetState extends ConsumerState<SudokuWidget>
                     width: double.maxFinite,
                     alignment: Alignment.topCenter,
                     child: const SudokuGrid()),
-                Positioned(
-                  left: 15,
-                  top: (MediaQuery.of(context).size.height / 12),
-                  child: Text(
-                      "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
-                ),
-                Positioned(
-                  right: 15,
-                  top: (MediaQuery.of(context).size.height / 12),
-                  child: Text(
-                      "Hints: ${gameState.currHints}/${gameState.maxHints}"),
-                ),
                 Center(
-                  // left: 175,
-                  // top: (MediaQuery.of(context).size.height / 12),
-                  heightFactor:
-                      7.5,
-                  // heightFactor: 10,
-                  child: Text(
-                    "$minutes:$seconds",
-                    style: const TextStyle(color: shadowPurple),
-                  ),
-                ),
+                    heightFactor: 7.5,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Text(
+                              "Mistakes: ${gameState.currMistakes}/${gameState.maxMistakes}"),
+                        ),
+                        SizedBox(width: 60),
+                        Expanded(child:Text(
+                          "$minutes:$seconds",
+                          style: const TextStyle(color: Colors.amber),
+                        )),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Text(
+                              "Hints: ${gameState.currHints}/${gameState.maxHints}"),
+                        ),
+                      ],
+                    )),
               ]),
               Expanded(
                   child: Row(

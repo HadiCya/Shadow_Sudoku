@@ -62,19 +62,19 @@ class FrontPageHome extends StatelessWidget {
                           )),
                           context: context,
                           builder: (BuildContext context){
-                            return Flexible(child: Column(
+                            return Column(
                               children: [
                                 Container(height: 20,),
 
-                                const BottomSheetButton(buttonText: "Easy", difficulty: difficultyOptions.easy),
-                                const BottomSheetDivider(),
-                                const SizedBox(height: 20,),
-                                const BottomSheetButton(buttonText: "Medium", difficulty: difficultyOptions.medium),
-                                const BottomSheetDivider(),
-                                const SizedBox(height: 20,),
-                                const BottomSheetButton(buttonText: "Hard", difficulty: difficultyOptions.hard),
+                                BottomSheetButton(buttonText: "Easy", difficulty: difficultyOptions.easy),
+                                BottomSheetDivider(),
+                                SizedBox(height: 20,),
+                                BottomSheetButton(buttonText: "Medium", difficulty: difficultyOptions.medium),
+                                BottomSheetDivider(),
+                                SizedBox(height: 20,),
+                                BottomSheetButton(buttonText: "Hard", difficulty: difficultyOptions.hard),
                               ],
-                            ));
+                            );
                           }
                       )
                     )

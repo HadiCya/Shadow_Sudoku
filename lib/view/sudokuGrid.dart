@@ -35,7 +35,7 @@ class SudokuGridState extends ConsumerState<SudokuGrid> {
           crossAxisSpacing: 0,
           mainAxisSpacing: 0,
         ),
-        physics: const ScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (buildContext, i) {
           return Container(
             decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class SudokuGridState extends ConsumerState<SudokuGrid> {
                   crossAxisSpacing: 0,
                   mainAxisSpacing: 0,
                 ),
-                physics: const ScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (buildContext, j) {
                   return GridNumbers(
                     i: i,
